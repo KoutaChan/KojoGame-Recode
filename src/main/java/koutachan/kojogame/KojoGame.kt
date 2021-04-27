@@ -3,8 +3,7 @@ package koutachan.kojogame
 
 import org.bukkit.plugin.java.JavaPlugin
 import koutachan.kojogame.game.GameState.*
-import koutachan.kojogame.runTask.TeamColor.TeamColor
-import org.bukkit.Bukkit
+import koutachan.kojogame.runTask.ScoreBoard.ScoreBoard
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -21,7 +20,6 @@ class KojoGame : JavaPlugin() {
         plugin = this
         // Register Event //
         server.pluginManager.registerEvents(Event,this)
-        TeamColor()
         // Plugin startup logic
     }
 
