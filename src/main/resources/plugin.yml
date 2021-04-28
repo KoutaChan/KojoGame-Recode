@@ -1,3 +1,6 @@
 name: KojoGame
 version: ${project.version}
 main: koutachan.kojogame.KojoGame
+commands:
+  givestick:
+    permission: kojogame.giveStick

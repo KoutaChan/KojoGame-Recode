@@ -16,6 +16,9 @@ object ScoreBoard {
         object : BukkitRunnable() {
             override fun run() {
                 //PlayerBoard
+                if(!player.isOnline){
+                    cancel()
+                }
                 scoreboard.getObjective(player.name)?.unregister()
                 val p = scoreboard.registerNewObjective(player.name, "dummy")
                 p.displaySlot = DisplaySlot.SIDEBAR
