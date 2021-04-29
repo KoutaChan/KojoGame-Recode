@@ -1,6 +1,7 @@
 package koutachan.kojogame
 
 
+import koutachan.kojogame.commands.debug
 import koutachan.kojogame.commands.giveStick
 import org.bukkit.plugin.java.JavaPlugin
 import koutachan.kojogame.game.GameState.*
@@ -9,7 +10,11 @@ import kotlin.collections.HashMap
 
 
     var GameState = LOBBY
-    var team = HashMap<UUID,String>()
+    var SpongeIron = true
+    var SpongeGold = true
+    var SpongeDiamond = true
+    var playerdata = HashMap<UUID,PlayerData>()
+
 
 class KojoGame : JavaPlugin() {
     companion object {
@@ -22,6 +27,7 @@ class KojoGame : JavaPlugin() {
         server.pluginManager.registerEvents(Event,this)
         // Register Command //
         getCommand("givestick").executor = giveStick
+        getCommand("debug").executor = debug
         // Add config.yml/
         saveDefaultConfig()
         // Plugin startup logic

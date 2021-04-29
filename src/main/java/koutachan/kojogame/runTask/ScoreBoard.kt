@@ -1,7 +1,8 @@
 package koutachan.kojogame.runTask
 
+import koutachan.kojogame.GameState
 import koutachan.kojogame.KojoGame.Companion.plugin
-import koutachan.kojogame.team
+import koutachan.kojogame.playerdata
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
@@ -22,7 +23,9 @@ object ScoreBoard {
                 scoreboard.getObjective(player.name)?.unregister()
                 val p = scoreboard.registerNewObjective(player.name, "dummy")
                 p.displaySlot = DisplaySlot.SIDEBAR
-                p.getScore("${player.health}").score = 10
+                p.getScore("").score = 10
+                p.getScore(" §cステータス: ${GameState.toString().replace("LOBBY","ゲーム待機中").replace("STARTING","ゲーム開始中").replace("PLAYING","ゲームプレイ中").replace("ENDING","ゲーム終了")}").score = 9
+                //p.getScore("${player.health}").score = 10
 
                 var red = scoreboard.getTeam("Red")
                 if (red == null) {
@@ -40,11 +43,15 @@ object ScoreBoard {
 
 
                 for (addteam in Bukkit.getOnlinePlayers()) {
-                    if (team[addteam.uniqueId] == "Red") {
+                    if (playerdata[addteam.uniqueId]?.team == "Red") {
                         red.addEntry(addteam.name)
                     }
-                    if (team[addteam.uniqueId] == "Blue") {
-                        blue.addEntry(addteam.name)
+                    if (playerdata[addteam.uniqueId]?.team == "Blue") {
+                            blue.addEntry(addteam.name)
+                    }
+                    if (playerdata[addteam.uniqueId]?.team == "Default") {
+                        red?.removeEntry(addteam.name)
+                        blue?.removeEntry(addteam.name)
                     }
                 }
                 player.scoreboard = scoreboard

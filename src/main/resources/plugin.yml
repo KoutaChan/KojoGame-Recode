@@ -4,3 +4,5 @@ main: koutachan.kojogame.KojoGame
 commands:
   givestick:
     permission: kojogame.giveStick
+  debug:
+    permission: kojogame.debug
