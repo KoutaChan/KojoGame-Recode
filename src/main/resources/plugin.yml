@@ -6,3 +6,5 @@ commands:
     permission: kojogame.giveStick
   debug:
     permission: kojogame.debug
+  start:
+    permission: kojogame.start

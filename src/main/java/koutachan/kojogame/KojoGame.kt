@@ -1,6 +1,7 @@
 package koutachan.kojogame
 
 
+import koutachan.kojogame.commands.Start
 import koutachan.kojogame.commands.debug
 import koutachan.kojogame.commands.giveStick
 import org.bukkit.plugin.java.JavaPlugin
@@ -28,6 +29,7 @@ class KojoGame : JavaPlugin() {
         // Register Command //
         getCommand("givestick").executor = giveStick
         getCommand("debug").executor = debug
+        getCommand("start").executor = Start
         // Add config.yml/
         saveDefaultConfig()
         // Plugin startup logic
