@@ -25,19 +25,20 @@ object Start : CommandExecutor{
             var starttime = 10
             object : BukkitRunnable() {
                 override fun run() {
-                    for (p in Bukkit.getOnlinePlayers()) {
-                        if (starttime < 1) {
-                            Bukkit.broadcastMessage("ゲームは開始されました！")
-                            p.sendTitle("ゲーム開始！", "")
-                            GameState = PLAYING
-                            cancel()
-                        }
-                        if (starttime in 1..10) {
+                    if (starttime in 1..10) {
+                        for (p in Bukkit.getOnlinePlayers()) {
                             p.sendTitle("$starttime", "")
-                            Bukkit.broadcastMessage("ゲームは${starttime}秒後に開始されます")
                             p.playSound(p.location, Sound.BLOCK_NOTE_HAT, 1F, 1F)
-                            starttime--
                         }
+                        Bukkit.broadcastMessage("ゲームは${starttime}秒後に開始されます")
+                        starttime--
+                    } else {
+                        for (p in Bukkit.getOnlinePlayers()) {
+                            p.sendTitle("ゲーム開始！", "")
+                        }
+                        Bukkit.broadcastMessage("ゲームは開始されました！")
+                        GameState = PLAYING
+                        cancel()
                     }
                 }
             }.runTaskTimer(plugin,0,20)

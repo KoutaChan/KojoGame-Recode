@@ -6,6 +6,7 @@ import koutachan.kojogame.commands.debug
 import koutachan.kojogame.commands.giveStick
 import org.bukkit.plugin.java.JavaPlugin
 import koutachan.kojogame.game.GameState.*
+import koutachan.kojogame.runTask.ScoreBoard
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -24,14 +25,17 @@ class KojoGame : JavaPlugin() {
 
     override fun onEnable() {
         plugin = this
-        // Register Event //
+        // Register Event
         server.pluginManager.registerEvents(Event,this)
-        // Register Command //
+        // Register Command
         getCommand("givestick").executor = giveStick
         getCommand("debug").executor = debug
         getCommand("start").executor = Start
-        // Add config.yml/
+        // Add config.yml
         saveDefaultConfig()
+        //???
+        ScoreBoard.ScoreBoardTimer()
+
         // Plugin startup logic
     }
 
