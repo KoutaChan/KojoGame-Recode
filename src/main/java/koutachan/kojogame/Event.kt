@@ -34,40 +34,45 @@ object Event : Listener {
         /*TODO: Add Team*/
     }
 
+    //メモ(青) : 攻め
+    //メモ(赤) : 守り
+
     @EventHandler
     fun BreakEvent(e: BlockBreakEvent) {
-        if (GameState == PLAYING && e.player.gameMode != GameMode.CREATIVE) {
+        if (e.player.gameMode != GameMode.CREATIVE) {
             if (e.block.type != Material.SPONGE) {
                 e.isCancelled = true
             }else {
                 e.isCancelled = true
-                if (e.block.world.name == plugin.config.getString("iron.world")
-                    && e.block.x == plugin.config.getInt("iron.x")
-                    && e.block.y == plugin.config.getInt("iron.y")
-                    && e.block.z == plugin.config.getInt("iron.z")) {
+                if (playerdata[e.player.uniqueId]?.team == "Blue") {
+                    if (e.block.world.name == plugin.config.getString("iron.world")
+                        && e.block.x == plugin.config.getInt("iron.x")
+                        && e.block.y == plugin.config.getInt("iron.y")
+                        && e.block.z == plugin.config.getInt("iron.z")) {
                         Bukkit.broadcastMessage("鉄のスポンジが破壊されました")
                         SpongeIron = false
                         e.isCancelled = false
-                }
-                if (e.block.world.name == plugin.config.getString("gold.world")
-                    && e.block.x == plugin.config.getInt("gold.x")
-                    && e.block.y == plugin.config.getInt("gold.y")
-                    && e.block.z == plugin.config.getInt("gold.z")) {
+                    }
+                    if (e.block.world.name == plugin.config.getString("gold.world")
+                        && e.block.x == plugin.config.getInt("gold.x")
+                        && e.block.y == plugin.config.getInt("gold.y")
+                        && e.block.z == plugin.config.getInt("gold.z")) {
                         Bukkit.broadcastMessage("金のスポンジが破壊されました")
                         SpongeGold = false
                         e.isCancelled = false
-                }
-                if (e.block.world.name == plugin.config.getString("diamond.world")
-                    && e.block.x == plugin.config.getInt("diamond.x")
-                    && e.block.y == plugin.config.getInt("diamond.y")
-                    && e.block.z == plugin.config.getInt("diamond.z")) {
+                    }
+                    if (e.block.world.name == plugin.config.getString("diamond.world")
+                        && e.block.x == plugin.config.getInt("diamond.x")
+                        && e.block.y == plugin.config.getInt("diamond.y")
+                        && e.block.z == plugin.config.getInt("diamond.z")) {
                         Bukkit.broadcastMessage("ダイヤのスポンジが破壊されました")
                         SpongeDiamond = false
                         e.isCancelled = false
-                }
-                if (!e.isCancelled && !SpongeIron && !SpongeGold && !SpongeDiamond) {
-                    Bukkit.broadcastMessage("テストーｗ")
-                    /*TODO: Add End*/
+                    }
+                    if (!e.isCancelled && !SpongeIron && !SpongeGold && !SpongeDiamond) {
+                        Bukkit.broadcastMessage("テストーｗ")
+                        /*TODO: Add End*/
+                    }
                 }
             }
         }
