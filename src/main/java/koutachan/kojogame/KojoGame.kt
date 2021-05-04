@@ -34,7 +34,7 @@ class KojoGame : JavaPlugin() {
         // Add config.yml
         saveDefaultConfig()
         //???
-        ScoreBoard.ScoreBoardTimer()
+        ScoreBoard.ScoreBoard()
 
         // Plugin startup logic
     }

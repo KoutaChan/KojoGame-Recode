@@ -26,9 +26,7 @@ object giveStick : CommandExecutor {
             diamondMeta.displayName = "§b§lダイヤの棒"
             diamond.itemMeta = diamondMeta
 
-            sender.inventory.addItem(iron)
-            sender.inventory.addItem(gold)
-            sender.inventory.addItem(diamond)
+            sender.inventory.addItem(iron,gold,diamond)
         }else {
             sender?.sendMessage("§cこのコマンドはプレイヤーからのみのコマンドです！")
         }

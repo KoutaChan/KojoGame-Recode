@@ -1,18 +1,19 @@
 package koutachan.kojogame
 
 import koutachan.kojogame.KojoGame.Companion.plugin
-import koutachan.kojogame.runTask.ScoreBoard.ScoreBoard
 import koutachan.kojogame.game.GameState.*
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Material
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
+import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerJoinEvent
 
@@ -20,8 +21,7 @@ object Event : Listener {
     @EventHandler
     fun PlayerJoinEvent(e: PlayerJoinEvent) {
         e.joinMessage = ""
-        ScoreBoard(e.player)
-        if(!playerdata.containsKey(e.player.uniqueId)) {
+        if (!playerdata.containsKey(e.player.uniqueId)) {
             playerdata[e.player.uniqueId] = PlayerData()
         }
         //val inta = 0
@@ -42,9 +42,9 @@ object Event : Listener {
         if (e.player.gameMode != GameMode.CREATIVE) {
             if (e.block.type != Material.SPONGE) {
                 e.isCancelled = true
-            }else {
+            } else {
                 e.isCancelled = true
-                if (playerdata[e.player.uniqueId]?.team == "Blue") {
+                if (GameState == PLAYING && playerdata[e.player.uniqueId]?.team == "Blue") {
                     if (e.block.world.name == plugin.config.getString("iron.world")
                         && e.block.x == plugin.config.getInt("iron.x")
                         && e.block.y == plugin.config.getInt("iron.y")
@@ -113,6 +113,21 @@ object Event : Listener {
                     plugin.saveConfig()
                     e.player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent("§b§n結果 world: ${e.clickedBlock.world.name} x: ${e.clickedBlock.x} y: ${e.clickedBlock.y} z: ${e.clickedBlock.z}"))
                 }
+            }
+        }
+    }
+
+    @EventHandler
+    fun EntityDamageByEntityEvent(e: EntityDamageEvent) {
+        if (e.entity is Player) {
+            if (GameState == PLAYING && playerdata[e.entity.uniqueId]?.team != "Default") {
+                if ((e.entity as Player).health - e.damage < 0) {
+                    e.isCancelled = true
+                    e.entity.sendMessage("§cあなたは死亡しました！ 5秒後に復活します")
+                    /*TODO: Add Respawn Time*/
+                }
+            } else {
+                e.isCancelled = true
             }
         }
     }
