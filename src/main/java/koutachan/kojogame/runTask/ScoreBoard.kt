@@ -43,10 +43,10 @@ object ScoreBoard {
 
                 for (addteam in Bukkit.getOnlinePlayers()) {
                     if (playerdata[addteam.uniqueId]?.team == "Red") {
-                        red.addEntry(addteam.name)
+                        red.addPlayer(addteam)
                     }
                     if (playerdata[addteam.uniqueId]?.team == "Blue") {
-                        blue.addEntry(addteam.name)
+                        blue.addPlayer(addteam)
                     }
                     if (playerdata[addteam.uniqueId]?.team == "Default") {
                         red?.removeEntry(addteam.name)

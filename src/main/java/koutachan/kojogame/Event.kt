@@ -16,6 +16,7 @@ import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.scheduler.BukkitRunnable
 
 object Event : Listener {
     @EventHandler
@@ -118,16 +119,32 @@ object Event : Listener {
     }
 
     @EventHandler
-    fun EntityDamageByEntityEvent(e: EntityDamageEvent) {
-        if (e.entity is Player) {
-            if (GameState == PLAYING && playerdata[e.entity.uniqueId]?.team != "Default") {
-                if ((e.entity as Player).health - e.damage < 0) {
-                    e.isCancelled = true
-                    e.entity.sendMessage("§cあなたは死亡しました！ 5秒後に復活します")
-                    /*TODO: Add Respawn Time*/
-                }
-            } else {
+    fun EntityDamageEvent(e: EntityDamageEvent) {
+        if (e.entity is Player){
+            if(GameState == PLAYING && playerdata[e.entity.uniqueId]?.team != "Default") {
+            if ((e.entity as Player).health - e.damage < 0) {
                 e.isCancelled = true
+                e.entity.sendMessage("§cあなたは死亡しました！ 5秒後に復活します")
+                (e.entity as Player).gameMode = GameMode.SPECTATOR
+                object : BukkitRunnable() {
+                    var RespawnTimer = 5
+                    override fun run() {
+                        if (RespawnTimer > 0) {
+                            (e.entity as Player).sendTitle("§cリスポーンまで: $RespawnTimer", "")
+
+                        }
+                        if (RespawnTimer == 0){
+                            //Teleport TO Team Spawn??????
+                            (e.entity as Player).gameMode = GameMode.SURVIVAL
+                            (e.entity as Player).sendTitle("§aリスポーンしました！","")
+                            cancel()
+                        }
+                        RespawnTimer--
+                    }
+                }.runTaskTimer(plugin,0,20)
+            }
+        } else {
+            e.isCancelled = true
             }
         }
     }
