@@ -4,19 +4,19 @@ import koutachan.kojogame.KojoGame.Companion.plugin
 import koutachan.kojogame.game.GameState.*
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
+import net.minecraft.server.v1_12_R1.PacketPlayInClientCommand
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Material
-import org.bukkit.entity.Player
+import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
-import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerJoinEvent
-import org.bukkit.scheduler.BukkitRunnable
 
 object Event : Listener {
     @EventHandler
@@ -119,33 +119,9 @@ object Event : Listener {
     }
 
     @EventHandler
-    fun EntityDamageEvent(e: EntityDamageEvent) {
-        if (e.entity is Player){
-            if(GameState == PLAYING && playerdata[e.entity.uniqueId]?.team != "Default") {
-            if ((e.entity as Player).health - e.damage < 0) {
-                e.isCancelled = true
-                e.entity.sendMessage("§cあなたは死亡しました！ 5秒後に復活します")
-                (e.entity as Player).gameMode = GameMode.SPECTATOR
-                object : BukkitRunnable() {
-                    var RespawnTimer = 5
-                    override fun run() {
-                        if (RespawnTimer > 0) {
-                            (e.entity as Player).sendTitle("§cリスポーンまで: $RespawnTimer", "")
-
-                        }
-                        if (RespawnTimer == 0){
-                            //Teleport TO Team Spawn??????
-                            (e.entity as Player).gameMode = GameMode.SURVIVAL
-                            (e.entity as Player).sendTitle("§aリスポーンしました！","")
-                            cancel()
-                        }
-                        RespawnTimer--
-                    }
-                }.runTaskTimer(plugin,0,20)
-            }
-        } else {
-            e.isCancelled = true
-            }
-        }
+    fun PlayerDeathEvent(e: PlayerDeathEvent){
+        Bukkit.getScheduler().runTaskLater(plugin, {
+            (e.entity.player as CraftPlayer).handle.playerConnection.a(PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN))
+        },3)
     }
 }

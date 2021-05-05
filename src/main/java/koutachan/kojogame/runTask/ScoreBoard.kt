@@ -20,8 +20,11 @@ object ScoreBoard {
                 p.getScore("").score = 10
                 p.getScore(
                     " §cステータス: ${
-                        GameState.toString().replace("LOBBY", "ゲーム待機中").replace("STARTING", "ゲーム開始中")
-                            .replace("PLAYING", "ゲームプレイ中").replace("ENDING", "ゲーム終了")
+                        GameState.toString().
+                        replace("LOBBY", "ゲーム待機中").
+                        replace("STARTING", "ゲーム開始中").
+                        replace("PLAYING", "ゲームプレイ中").
+                        replace("ENDING", "ゲーム終了")
                     }"
                 ).score = 9
                 //p.getScore("${player.health}").score = 10
