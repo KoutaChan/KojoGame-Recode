@@ -2,8 +2,6 @@ package koutachan.kojogame.langMessage
 
 import koutachan.kojogame.*
 import org.bukkit.configuration.file.YamlConfiguration
-import java.util.*
-import kotlin.collections.HashMap
 
 object lang {
 

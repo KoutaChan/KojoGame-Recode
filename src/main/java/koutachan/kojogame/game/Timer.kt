@@ -14,12 +14,12 @@ object Timer {
                 time--
                 if (time <= 0) {
                     time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
-                    Bukkit.broadcastMessage(lang.MESSAGE_TELEPORT_TO_LOBBY5.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString()))
+                    Bukkit.broadcastMessage(lang.MESSAGE_TELEPORT_TO_LOBBY5.replace("@state", GameState.toString().replace("LOBBY","${lang.config.get("GAMESTATE_LOBBY")}").replace("STARTING","${lang.config.get("GAMESTATE_STARTING")}").replace("PLAYING","${lang.config.get("GAMESTATE_PLAYING")}").replace("ENDING","${lang.config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time"))
                     GameState = ENDING
                     cancel()
                     Bukkit.getScheduler().runTaskLater(KojoGame.plugin, {
                         GameState = LOBBY
-                        Bukkit.broadcastMessage(lang.MESSAGE_TELEPORT_TO_LOBBY.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString()))
+                        Bukkit.broadcastMessage(lang.MESSAGE_TELEPORT_TO_LOBBY.replace("@state", GameState.toString().replace("LOBBY","${lang.config.get("GAMESTATE_LOBBY")}").replace("STARTING","${lang.config.get("GAMESTATE_STARTING")}").replace("PLAYING","${lang.config.get("GAMESTATE_PLAYING")}").replace("ENDING","${lang.config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time"))
                     },20 * 5)
                 }
             }

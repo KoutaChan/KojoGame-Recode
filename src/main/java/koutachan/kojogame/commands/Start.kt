@@ -31,16 +31,16 @@ object Start : CommandExecutor{
                 override fun run() {
                     if (starttime in 1..10) {
                         for (p in Bukkit.getOnlinePlayers()) {
-                            p.sendTitle(lang.TITLE_STARTING_COUNT.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString()), "")
+                            p.sendTitle(lang.TITLE_STARTING_COUNT.replace("@state", GameState.toString().replace("LOBBY","${lang.config.get("GAMESTATE_LOBBY")}").replace("STARTING","${lang.config.get("GAMESTATE_STARTING")}").replace("PLAYING","${lang.config.get("GAMESTATE_PLAYING")}").replace("ENDING","${lang.config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time"), "")
                             p.playSound(p.location, Sound.BLOCK_NOTE_HAT, 1F, 1F)
                         }
-                        Bukkit.broadcastMessage(lang.MESSAGE_STARTING_COUNT.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString()))
+                        Bukkit.broadcastMessage(lang.MESSAGE_STARTING_COUNT.replace("@state", GameState.toString().replace("LOBBY","${lang.config.get("GAMESTATE_LOBBY")}").replace("STARTING","${lang.config.get("GAMESTATE_STARTING")}").replace("PLAYING","${lang.config.get("GAMESTATE_PLAYING")}").replace("ENDING","${lang.config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time"))
                         starttime--
                     } else {
                         for (p in Bukkit.getOnlinePlayers()) {
-                            p.sendTitle(lang.TITLE_START.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString()), "")
+                            p.sendTitle(lang.TITLE_START.replace("@state", GameState.toString().replace("LOBBY","${lang.config.get("GAMESTATE_LOBBY")}").replace("STARTING","${lang.config.get("GAMESTATE_STARTING")}").replace("PLAYING","${lang.config.get("GAMESTATE_PLAYING")}").replace("ENDING","${lang.config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time"), "")
                         }
-                        Bukkit.broadcastMessage(lang.MESSAGE_START.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString()))
+                        Bukkit.broadcastMessage(lang.MESSAGE_START.replace("@state", GameState.toString().replace("LOBBY","${lang.config.get("GAMESTATE_LOBBY")}").replace("STARTING","${lang.config.get("GAMESTATE_STARTING")}").replace("PLAYING","${lang.config.get("GAMESTATE_PLAYING")}").replace("ENDING","${lang.config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time"))
                         GameState = PLAYING
                         Timer()
                         cancel()

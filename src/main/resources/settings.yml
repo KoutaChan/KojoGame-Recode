@@ -1,4 +1,7 @@
 
+#Configの内容を適用したい場合は
+#/reload を使用してください
+
 #ゲームの時間です(秒)
 GameTime: 900
 
@@ -7,7 +10,7 @@ GameTime: 900
 
 
 #- Message -#
-# @start = スタート時間
+# @start = スタート時間 (スコアボードに表示することは推奨されていません)
 # @time = 時間
 # @state = ゲームステータス (STARTING,PLAYING...) 後で日本語にできるようにする
 
@@ -21,12 +24,11 @@ TELEPORT_TO_LOBBY5: "§75秒後にロビーにテレポートします..."
 TELEPORT_TO_LOBBY: "§7ロビーにテレポート中..."
 
 #- GameState -#
-# 現在これは意味なし！ｗ
-#- これらには@start @time などは使えません(null) -#
+#- FIXED(beta-1.0): @time @start が使えるように -#
 
 GAMESTATE_LOBBY: " ステータス: ゲーム待機中"
 GAMESTATE_STARTING: " ステータス: ゲーム開始中"
-GAMESTATE_START: " ステータス: ゲーム中"
+GAMESTATE_PLAYING: " 残り時間: @time 秒"
 GAMESTATE_ENDING: " ステータス: ゲーム終了"
 
 #- ScoreBoard -#

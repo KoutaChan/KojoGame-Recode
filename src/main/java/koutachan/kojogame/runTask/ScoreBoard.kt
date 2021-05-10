@@ -15,7 +15,7 @@ object ScoreBoard {
 
     fun ScoreBoard(player: Player) {
         val scoreboard = Bukkit.getScoreboardManager().newScoreboard
-        val p = scoreboard.registerNewObjective(lang.TITLE_SCOREBOARD.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString().replace("LOBBY","${config.get("GAMESTATE_LOBBY")}").replace("STARTING","${config.get("GAMESTATE_STARTING")}").replace("PLAYING","${config.get("GAMESTATE_PLAYING")}".replace("ENDING","${config.get("GAMESTATE_ENDING")}"))), "dummy")
+        val p = scoreboard.registerNewObjective(lang.TITLE_SCOREBOARD.replace("@state", GameState.toString().replace("LOBBY","${config.get("GAMESTATE_LOBBY")}").replace("STARTING","${config.get("GAMESTATE_STARTING")}").replace("PLAYING","${config.get("GAMESTATE_PLAYING")}").replace("ENDING","${config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time"), "dummy")
 
         p.getScore("§9").score = 10
         p.getScore("§8").score = 9
@@ -84,16 +84,16 @@ object ScoreBoard {
     fun ScoreBoardUpdate(){
         Bukkit.getScheduler().runTaskTimer(plugin, {
             for (player in Bukkit.getOnlinePlayers()) {
-                player.scoreboard.getTeam("line1").prefix = lang.SCOREBOARD_LINE1.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString())
-                player.scoreboard.getTeam("line2").prefix = lang.SCOREBOARD_LINE2.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString())
-                player.scoreboard.getTeam("line3").prefix = lang.SCOREBOARD_LINE3.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString())
-                player.scoreboard.getTeam("line4").prefix = lang.SCOREBOARD_LINE4.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString())
-                player.scoreboard.getTeam("line5").prefix = lang.SCOREBOARD_LINE5.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString())
-                player.scoreboard.getTeam("line6").prefix = lang.SCOREBOARD_LINE6.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString())
-                player.scoreboard.getTeam("line7").prefix = lang.SCOREBOARD_LINE7.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString())
-                player.scoreboard.getTeam("line8").prefix = lang.SCOREBOARD_LINE8.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString())
-                player.scoreboard.getTeam("line9").prefix = lang.SCOREBOARD_LINE9.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString())
-                player.scoreboard.getTeam("line10").prefix = lang.SCOREBOARD_LINE10.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString())
+                player.scoreboard.getTeam("line1").prefix = lang.SCOREBOARD_LINE1.replace("@state", GameState.toString().replace("LOBBY","${config.get("GAMESTATE_LOBBY")}").replace("STARTING","${config.get("GAMESTATE_STARTING")}").replace("PLAYING","${config.get("GAMESTATE_PLAYING")}").replace("ENDING","${config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time")
+                player.scoreboard.getTeam("line2").prefix = lang.SCOREBOARD_LINE2.replace("@state", GameState.toString().replace("LOBBY","${config.get("GAMESTATE_LOBBY")}").replace("STARTING","${config.get("GAMESTATE_STARTING")}").replace("PLAYING","${config.get("GAMESTATE_PLAYING")}").replace("ENDING","${config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time")
+                player.scoreboard.getTeam("line3").prefix = lang.SCOREBOARD_LINE3.replace("@state", GameState.toString().replace("LOBBY","${config.get("GAMESTATE_LOBBY")}").replace("STARTING","${config.get("GAMESTATE_STARTING")}").replace("PLAYING","${config.get("GAMESTATE_PLAYING")}").replace("ENDING","${config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time")
+                player.scoreboard.getTeam("line4").prefix = lang.SCOREBOARD_LINE4.replace("@state", GameState.toString().replace("LOBBY","${config.get("GAMESTATE_LOBBY")}").replace("STARTING","${config.get("GAMESTATE_STARTING")}").replace("PLAYING","${config.get("GAMESTATE_PLAYING")}").replace("ENDING","${config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time")
+                player.scoreboard.getTeam("line5").prefix = lang.SCOREBOARD_LINE5.replace("@state", GameState.toString().replace("LOBBY","${config.get("GAMESTATE_LOBBY")}").replace("STARTING","${config.get("GAMESTATE_STARTING")}").replace("PLAYING","${config.get("GAMESTATE_PLAYING")}").replace("ENDING","${config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time")
+                player.scoreboard.getTeam("line6").prefix = lang.SCOREBOARD_LINE6.replace("@state", GameState.toString().replace("LOBBY","${config.get("GAMESTATE_LOBBY")}").replace("STARTING","${config.get("GAMESTATE_STARTING")}").replace("PLAYING","${config.get("GAMESTATE_PLAYING")}").replace("ENDING","${config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time")
+                player.scoreboard.getTeam("line7").prefix = lang.SCOREBOARD_LINE7.replace("@state", GameState.toString().replace("LOBBY","${config.get("GAMESTATE_LOBBY")}").replace("STARTING","${config.get("GAMESTATE_STARTING")}").replace("PLAYING","${config.get("GAMESTATE_PLAYING")}").replace("ENDING","${config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time")
+                player.scoreboard.getTeam("line8").prefix = lang.SCOREBOARD_LINE8.replace("@state", GameState.toString().replace("LOBBY","${config.get("GAMESTATE_LOBBY")}").replace("STARTING","${config.get("GAMESTATE_STARTING")}").replace("PLAYING","${config.get("GAMESTATE_PLAYING")}").replace("ENDING","${config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time")
+                player.scoreboard.getTeam("line9").prefix = lang.SCOREBOARD_LINE9.replace("@state", GameState.toString().replace("LOBBY","${config.get("GAMESTATE_LOBBY")}").replace("STARTING","${config.get("GAMESTATE_STARTING")}").replace("PLAYING","${config.get("GAMESTATE_PLAYING")}").replace("ENDING","${config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time")
+                player.scoreboard.getTeam("line10").prefix = lang.SCOREBOARD_LINE10.replace("@state", GameState.toString().replace("LOBBY","${config.get("GAMESTATE_LOBBY")}").replace("STARTING","${config.get("GAMESTATE_STARTING")}").replace("PLAYING","${config.get("GAMESTATE_PLAYING")}").replace("ENDING","${config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time")
 
                 for (addteam in Bukkit.getOnlinePlayers()) {
                     if (playerdata[addteam.uniqueId]?.team == "Red") {
