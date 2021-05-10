@@ -2,6 +2,7 @@ package koutachan.kojogame
 
 import koutachan.kojogame.KojoGame.Companion.plugin
 import koutachan.kojogame.game.GameState.*
+import koutachan.kojogame.runTask.ScoreBoard
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
 import net.minecraft.server.v1_12_R1.PacketPlayInClientCommand
@@ -22,6 +23,7 @@ object Event : Listener {
     @EventHandler
     fun PlayerJoinEvent(e: PlayerJoinEvent) {
         e.joinMessage = ""
+        ScoreBoard.ScoreBoard(e.player)
         if (!playerdata.containsKey(e.player.uniqueId)) {
             playerdata[e.player.uniqueId] = PlayerData()
         }

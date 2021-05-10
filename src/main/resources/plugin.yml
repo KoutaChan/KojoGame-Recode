@@ -8,3 +8,5 @@ commands:
     permission: kojogame.debug
   start:
     permission: kojogame.start
+  ping:
+    usage: /ping

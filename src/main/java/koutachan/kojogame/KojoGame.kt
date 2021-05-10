@@ -1,6 +1,7 @@
 package koutachan.kojogame
 
 
+import koutachan.kojogame.commands.Ping
 import koutachan.kojogame.commands.Start
 import koutachan.kojogame.commands.debug
 import koutachan.kojogame.commands.giveStick
@@ -16,6 +17,7 @@ import kotlin.collections.HashMap
     var SpongeGold = true
     var SpongeDiamond = true
     var playerdata = HashMap<UUID,PlayerData>()
+    var time = 0
 
 
 class KojoGame : JavaPlugin() {
@@ -31,10 +33,11 @@ class KojoGame : JavaPlugin() {
         getCommand("givestick").executor = giveStick
         getCommand("debug").executor = debug
         getCommand("start").executor = Start
+        getCommand("ping").executor = Ping
         // Add config.yml
         saveDefaultConfig()
         //???
-        ScoreBoard.ScoreBoard()
+        ScoreBoard.ScoreBoardUpdate()
 
         // Plugin startup logic
     }
