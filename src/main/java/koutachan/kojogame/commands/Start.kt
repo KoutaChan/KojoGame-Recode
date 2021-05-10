@@ -5,6 +5,7 @@ package koutachan.kojogame.commands
 import koutachan.kojogame.GameState
 import koutachan.kojogame.KojoGame.Companion.plugin
 import koutachan.kojogame.game.GameState.*
+import koutachan.kojogame.game.Timer.Timer
 import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.command.Command
@@ -38,6 +39,7 @@ object Start : CommandExecutor{
                         }
                         Bukkit.broadcastMessage("ゲームは開始されました！")
                         GameState = PLAYING
+                        Timer()
                         cancel()
                     }
                 }

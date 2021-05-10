@@ -8,16 +8,20 @@ import koutachan.kojogame.commands.giveStick
 import org.bukkit.plugin.java.JavaPlugin
 import koutachan.kojogame.game.GameState.*
 import koutachan.kojogame.runTask.ScoreBoard
+import org.bukkit.configuration.file.YamlConfiguration
+import java.io.File
 import java.util.*
 import kotlin.collections.HashMap
 
+
+    val SettingsFile = File("plugins/KojoGame/settings.yml")
 
     var GameState = LOBBY
     var SpongeIron = true
     var SpongeGold = true
     var SpongeDiamond = true
     var playerdata = HashMap<UUID,PlayerData>()
-    var time = 0
+    var time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
 
 
 class KojoGame : JavaPlugin() {
@@ -38,7 +42,8 @@ class KojoGame : JavaPlugin() {
         saveDefaultConfig()
         //???
         ScoreBoard.ScoreBoardUpdate()
-
+        //Custom Config
+        saveResource("settings.yml",false)
         // Plugin startup logic
     }
 
