@@ -20,7 +20,8 @@ import kotlin.collections.HashMap
     var SpongeIron = true
     var SpongeGold = true
     var SpongeDiamond = true
-    var playerdata = HashMap<UUID,PlayerData>()
+    var playerdata = HashMap<UUID, PlayerData>()
+    var starttime = 10
     var time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
 
 

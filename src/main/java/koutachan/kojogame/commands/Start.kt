@@ -6,6 +6,9 @@ import koutachan.kojogame.GameState
 import koutachan.kojogame.KojoGame.Companion.plugin
 import koutachan.kojogame.game.GameState.*
 import koutachan.kojogame.game.Timer.Timer
+import koutachan.kojogame.langMessage.lang
+import koutachan.kojogame.starttime
+import koutachan.kojogame.time
 import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.command.Command
@@ -23,21 +26,21 @@ object Start : CommandExecutor{
     ): Boolean {
         if(GameState == LOBBY){
             GameState = STARTING
-            var starttime = 10
+            starttime = 10
             object : BukkitRunnable() {
                 override fun run() {
                     if (starttime in 1..10) {
                         for (p in Bukkit.getOnlinePlayers()) {
-                            p.sendTitle("$starttime", "")
+                            p.sendTitle(lang.TITLE_STARTING_COUNT.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString()), "")
                             p.playSound(p.location, Sound.BLOCK_NOTE_HAT, 1F, 1F)
                         }
-                        Bukkit.broadcastMessage("ゲームは${starttime}秒後に開始されます")
+                        Bukkit.broadcastMessage(lang.MESSAGE_STARTING_COUNT.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString()))
                         starttime--
                     } else {
                         for (p in Bukkit.getOnlinePlayers()) {
-                            p.sendTitle("ゲーム開始！", "")
+                            p.sendTitle(lang.TITLE_START.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString()), "")
                         }
-                        Bukkit.broadcastMessage("ゲームは開始されました！")
+                        Bukkit.broadcastMessage(lang.MESSAGE_START.replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString()))
                         GameState = PLAYING
                         Timer()
                         cancel()
