@@ -10,7 +10,7 @@ object lang {
     //CURRENT REPLACE .replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString())
 
     val MESSAGE_STARTING_COUNT = config.get("STARTING_COUNT").toString()
-    val TITLE_STARTING_COUNT = config.get("SRATING_TITLE").toString()
+    val TITLE_STARTING_COUNT = config.get("STARTING_TITLE").toString()
 
     val MESSAGE_START = config.get("START_CHAT").toString()
     val TITLE_START = config.get("START_TITLE").toString()

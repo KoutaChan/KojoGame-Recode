@@ -3,6 +3,8 @@
 #/reload を使用してください
 
 #ゲームの時間です(秒)
+StartTime: 10
+
 GameTime: 900
 
 
@@ -10,12 +12,12 @@ GameTime: 900
 
 
 #- Message -#
-# @start = スタート時間 (スコアボードに表示することは推奨されていません)
+# @start = スタート時間
 # @time = 時間
-# @state = ゲームステータス (STARTING,PLAYING...) 後で日本語にできるようにする
+# @state = ゲームステータス
 
 STARTING_COUNT: "ゲームは@start秒後に開始します"
-SRATING_TITLE: "@start"
+STARTING_TITLE: "@start"
 
 START_CHAT: "ゲームは開始されました！"
 START_TITLE: "ゲーム開始！"
@@ -27,7 +29,7 @@ TELEPORT_TO_LOBBY: "§7ロビーにテレポート中..."
 #- FIXED(beta-1.0): @time @start が使えるように -#
 
 GAMESTATE_LOBBY: " ステータス: ゲーム待機中"
-GAMESTATE_STARTING: " ステータス: ゲーム開始中"
+GAMESTATE_STARTING: " 開始まで: @start 秒"
 GAMESTATE_PLAYING: " 残り時間: @time 秒"
 GAMESTATE_ENDING: " ステータス: ゲーム終了"
 
@@ -38,7 +40,7 @@ SCOREBOARD_TITLE: "§e§l攻城戦 (1.12.2)"
 SCOREBOARD_LINE10: "@start"
 SCOREBOARD_LINE9: "@state"
 SCOREBOARD_LINE8: "@time"
-SCOREBOARD_LINE7: "え"
+SCOREBOARD_LINE7: "@start | @time"
 SCOREBOARD_LINE6: "お"
 SCOREBOARD_LINE5: "か"
 SCOREBOARD_LINE4: "き"

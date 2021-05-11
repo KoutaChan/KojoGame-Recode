@@ -21,7 +21,7 @@ import kotlin.collections.HashMap
     var SpongeGold = true
     var SpongeDiamond = true
     var playerdata = HashMap<UUID, PlayerData>()
-    var starttime = 10
+    var starttime = 0
     var time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
 
 
@@ -44,7 +44,10 @@ class KojoGame : JavaPlugin() {
         //???
         ScoreBoard.ScoreBoardUpdate()
         //Custom Config
-        saveResource("settings.yml",false)
+        if(!SettingsFile.exists()) {
+            saveResource("settings.yml", false)
+            time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
+        }
         // Plugin startup logic
     }
 
