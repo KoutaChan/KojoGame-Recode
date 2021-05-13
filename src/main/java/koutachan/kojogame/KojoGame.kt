@@ -15,7 +15,7 @@ import java.util.*
 import kotlin.collections.HashMap
 
 
-    val SettingsFile = File("plugins/KojoGame/settings.yml")
+val SettingsFile = File("plugins/KojoGame/settings.yml")
 
     var GameState = LOBBY
     var SpongeIron = true
@@ -24,6 +24,7 @@ import kotlin.collections.HashMap
     var playerdata = HashMap<UUID, PlayerData>()
     var starttime = 0
     var time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
+    var maxmem: Long = 0
 
 
 class KojoGame : JavaPlugin() {
@@ -44,12 +45,13 @@ class KojoGame : JavaPlugin() {
         saveDefaultConfig()
         //???
         ScoreBoard.ScoreBoardUpdate()
+        maxmem = Runtime.getRuntime().totalMemory() / 1048576
+
         //Custom Config
         if(!SettingsFile.exists()) {
             saveResource("settings.yml", false)
             time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
         }
-        lang.LengthCheck()
         // Plugin startup logic
     }
 

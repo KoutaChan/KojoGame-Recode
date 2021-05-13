@@ -34,9 +34,12 @@ GAMESTATE_PLAYING: "残り時間: @time 秒"
 GAMESTATE_ENDING: "ステータス: ゲーム終了"
 
 #- ScoreBoard -#
+
 # @randomint = スコアボードのみ、ランダムな数字を生成する(お遊び)
 # @playername = スコアボードのみ、プレイヤーの名前を表示する
-# 書き直すのがめんどくさいので、これらには32文字の制限があります
+# @usedmem = スコアボードのみ、使ってるメモリー表示
+# @maxmem = スコアボードのみ、最大メモリー表示
+
 
 SCOREBOARD_TITLE: "§e§l攻城戦 (1.12.2)"
 
@@ -44,12 +47,12 @@ SCOREBOARD_LINE10: ""
 SCOREBOARD_LINE9: " @state"
 SCOREBOARD_LINE8: ""
 SCOREBOARD_LINE7: ""
-SCOREBOARD_LINE6: " @playername"
+SCOREBOARD_LINE6: ""
 SCOREBOARD_LINE5: ""
 SCOREBOARD_LINE4: ""
 SCOREBOARD_LINE3: ""
 SCOREBOARD_LINE2: ""
-SCOREBOARD_LINE1: ""
+SCOREBOARD_LINE1: "@usedmem"
 
 
 #- Team -#

@@ -20,16 +20,16 @@ object lang {
 
     val TITLE_SCOREBOARD = config.get("SCOREBOARD_TITLE").toString()
 
-    var SCOREBOARD_LINE10 = config.get("SCOREBOARD_LINE10").toString()
-    var SCOREBOARD_LINE9 = config.get("SCOREBOARD_LINE9").toString()
-    var SCOREBOARD_LINE8 = config.get("SCOREBOARD_LINE8").toString()
-    var SCOREBOARD_LINE7 = config.get("SCOREBOARD_LINE7").toString()
-    var SCOREBOARD_LINE6 = config.get("SCOREBOARD_LINE6").toString()
-    var SCOREBOARD_LINE5 = config.get("SCOREBOARD_LINE5").toString()
-    var SCOREBOARD_LINE4 = config.get("SCOREBOARD_LINE4").toString()
-    var SCOREBOARD_LINE3 = config.get("SCOREBOARD_LINE3").toString()
-    var SCOREBOARD_LINE2 = config.get("SCOREBOARD_LINE2").toString()
-    var SCOREBOARD_LINE1 = config.get("SCOREBOARD_LINE1").toString()
+    var SCOREBOARD_LINE10 = ""
+    var SCOREBOARD_LINE9 = ""
+    var SCOREBOARD_LINE8 = ""
+    var SCOREBOARD_LINE7 = ""
+    var SCOREBOARD_LINE6 = ""
+    var SCOREBOARD_LINE5 = ""
+    var SCOREBOARD_LINE4 = ""
+    var SCOREBOARD_LINE3 = ""
+    var SCOREBOARD_LINE2 = ""
+    var SCOREBOARD_LINE1 = ""
 
     var SCOREBOARD_LINE10_SUFFIX = ""
     var SCOREBOARD_LINE9_SUFFIX = ""
