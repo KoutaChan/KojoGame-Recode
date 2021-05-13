@@ -43,45 +43,45 @@ object lang {
     var SCOREBOARD_LINE1_SUFFIX = ""
 
     fun LengthCheck(){
-        if(SCOREBOARD_LINE10.length >= 16){
-            SCOREBOARD_LINE10_SUFFIX = SCOREBOARD_LINE10.substring(17)
-            SCOREBOARD_LINE10 = SCOREBOARD_LINE10.substring(1,16)
+        if(SCOREBOARD_LINE10.length in 17..32){
+            SCOREBOARD_LINE10_SUFFIX = SCOREBOARD_LINE10.substring(16)
+            SCOREBOARD_LINE10 = SCOREBOARD_LINE10.substring(0,16)
         }
-        if(SCOREBOARD_LINE9.length >= 16){
-            SCOREBOARD_LINE9_SUFFIX = SCOREBOARD_LINE9.substring(17)
-            SCOREBOARD_LINE9 = SCOREBOARD_LINE9.substring(1,16)
+        if(SCOREBOARD_LINE9.length in 17..32){
+            SCOREBOARD_LINE9_SUFFIX = SCOREBOARD_LINE9.substring(16)
+            SCOREBOARD_LINE9 = SCOREBOARD_LINE9.substring(0,16)
         }
-        if(SCOREBOARD_LINE8.length >= 16){
-            SCOREBOARD_LINE8_SUFFIX = SCOREBOARD_LINE8.substring(17)
-            SCOREBOARD_LINE8 = SCOREBOARD_LINE8.substring(1,16)
+        if(SCOREBOARD_LINE8.length in 17..32){
+            SCOREBOARD_LINE8_SUFFIX = SCOREBOARD_LINE8.substring(16)
+            SCOREBOARD_LINE8 = SCOREBOARD_LINE8.substring(0,16)
         }
-        if(SCOREBOARD_LINE7.length >= 16){
-            SCOREBOARD_LINE7_SUFFIX = SCOREBOARD_LINE7.substring(17)
-            SCOREBOARD_LINE7 = SCOREBOARD_LINE7.substring(1,16)
+        if(SCOREBOARD_LINE7.length in 17..32){
+            SCOREBOARD_LINE7_SUFFIX = SCOREBOARD_LINE7.substring(16)
+            SCOREBOARD_LINE7 = SCOREBOARD_LINE7.substring(0,16)
         }
-        if(SCOREBOARD_LINE6.length >= 16){
-            SCOREBOARD_LINE6_SUFFIX = SCOREBOARD_LINE6.substring(17)
-            SCOREBOARD_LINE6 = SCOREBOARD_LINE6.substring(1,16)
+        if(SCOREBOARD_LINE6.length in 17..32){
+            SCOREBOARD_LINE6_SUFFIX = SCOREBOARD_LINE6.substring(16)
+            SCOREBOARD_LINE6 = SCOREBOARD_LINE6.substring(0,16)
         }
-        if(SCOREBOARD_LINE5.length >= 16){
-            SCOREBOARD_LINE5_SUFFIX = SCOREBOARD_LINE5.substring(17)
-            SCOREBOARD_LINE5 = SCOREBOARD_LINE5.substring(1,16)
+        if(SCOREBOARD_LINE5.length in 17..32){
+            SCOREBOARD_LINE5_SUFFIX = SCOREBOARD_LINE5.substring(16)
+            SCOREBOARD_LINE5 = SCOREBOARD_LINE5.substring(0,16)
         }
-        if(SCOREBOARD_LINE4.length >= 16){
-            SCOREBOARD_LINE4_SUFFIX = SCOREBOARD_LINE4.substring(17)
-            SCOREBOARD_LINE4 = SCOREBOARD_LINE4.substring(1,16)
+        if(SCOREBOARD_LINE4.length in 17..32){
+            SCOREBOARD_LINE4_SUFFIX = SCOREBOARD_LINE4.substring(16)
+            SCOREBOARD_LINE4 = SCOREBOARD_LINE4.substring(0,16)
         }
-        if(SCOREBOARD_LINE3.length >= 16){
-            SCOREBOARD_LINE3_SUFFIX = SCOREBOARD_LINE3.substring(17)
-            SCOREBOARD_LINE3 = SCOREBOARD_LINE3.substring(1,16)
+        if(SCOREBOARD_LINE3.length in 17..32){
+            SCOREBOARD_LINE3_SUFFIX = SCOREBOARD_LINE3.substring(16)
+            SCOREBOARD_LINE3 = SCOREBOARD_LINE3.substring(0,16)
         }
-        if(SCOREBOARD_LINE2.length >= 16){
-            SCOREBOARD_LINE2_SUFFIX = SCOREBOARD_LINE2.substring(17)
-            SCOREBOARD_LINE2 = SCOREBOARD_LINE2.substring(1,16)
+        if(SCOREBOARD_LINE2.length in 17..32){
+            SCOREBOARD_LINE2_SUFFIX = SCOREBOARD_LINE2.substring(16)
+            SCOREBOARD_LINE2 = SCOREBOARD_LINE2.substring(0,16)
         }
-        if(SCOREBOARD_LINE1.length >= 16){
-            SCOREBOARD_LINE1_SUFFIX = SCOREBOARD_LINE1.substring(17)
-            SCOREBOARD_LINE1 = SCOREBOARD_LINE1.substring(1,16)
+        if(SCOREBOARD_LINE1.length in 17..32){
+            SCOREBOARD_LINE1_SUFFIX = SCOREBOARD_LINE1.substring(16)
+            SCOREBOARD_LINE1 = SCOREBOARD_LINE1.substring(0,16)
         }
     }
 }

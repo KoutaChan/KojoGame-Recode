@@ -28,10 +28,10 @@ TELEPORT_TO_LOBBY: "§7ロビーにテレポート中..."
 #- GameState -#
 #- FIXED(beta-1.0): @time @start が使えるように -#
 
-GAMESTATE_LOBBY: " ステータス: ゲーム待機中"
-GAMESTATE_STARTING: " 開始まで: @start 秒"
-GAMESTATE_PLAYING: " 残り時間: @time 秒"
-GAMESTATE_ENDING: " ステータス: ゲーム終了"
+GAMESTATE_LOBBY: "ステータス: ゲーム待機中"
+GAMESTATE_STARTING: "開始まで: @start 秒"
+GAMESTATE_PLAYING: "残り時間: @time 秒"
+GAMESTATE_ENDING: "ステータス: ゲーム終了"
 
 #- ScoreBoard -#
 # @randomint = スコアボードのみ、ランダムな数字を生成する(お遊び)
@@ -41,7 +41,7 @@ GAMESTATE_ENDING: " ステータス: ゲーム終了"
 SCOREBOARD_TITLE: "§e§l攻城戦 (1.12.2)"
 
 SCOREBOARD_LINE10: ""
-SCOREBOARD_LINE9: "@state"
+SCOREBOARD_LINE9: " @state"
 SCOREBOARD_LINE8: ""
 SCOREBOARD_LINE7: ""
 SCOREBOARD_LINE6: " @playername"
