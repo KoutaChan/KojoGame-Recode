@@ -7,6 +7,7 @@ import koutachan.kojogame.commands.debug
 import koutachan.kojogame.commands.giveStick
 import org.bukkit.plugin.java.JavaPlugin
 import koutachan.kojogame.game.GameState.*
+import koutachan.kojogame.langMessage.lang
 import koutachan.kojogame.runTask.ScoreBoard
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
@@ -48,6 +49,7 @@ class KojoGame : JavaPlugin() {
             saveResource("settings.yml", false)
             time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
         }
+        lang.LengthCheck()
         // Plugin startup logic
     }
 

@@ -36,7 +36,7 @@ GAMESTATE_ENDING: " ステータス: ゲーム終了"
 #- ScoreBoard -#
 # @randomint = スコアボードのみ、ランダムな数字を生成する(お遊び)
 # @playername = スコアボードのみ、プレイヤーの名前を表示する
-# 書き直すのがめんどくさいので、これらには16文字の制限があります
+# 書き直すのがめんどくさいので、これらには32文字の制限があります
 
 SCOREBOARD_TITLE: "§e§l攻城戦 (1.12.2)"
 
@@ -50,19 +50,6 @@ SCOREBOARD_LINE4: ""
 SCOREBOARD_LINE3: ""
 SCOREBOARD_LINE2: ""
 SCOREBOARD_LINE1: ""
-
-
-#16文字以上越した時に？
-SCOREBOARD_LINE10_SUFFIX: ""
-SCOREBOARD_LINE9_SUFFIX: ""
-SCOREBOARD_LINE8_SUFFIX: ""
-SCOREBOARD_LINE7_SUFFIX: ""
-SCOREBOARD_LINE6_SUFFIX: ""
-SCOREBOARD_LINE5_SUFFIX: ""
-SCOREBOARD_LINE4_SUFFIX: ""
-SCOREBOARD_LINE3_SUFFIX: ""
-SCOREBOARD_LINE2_SUFFIX: ""
-SCOREBOARD_LINE1_SUFFIX: ""
 
 
 #- Team -#
