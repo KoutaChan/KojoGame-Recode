@@ -34,6 +34,7 @@ GAMESTATE_PLAYING: "残り時間: @time 秒"
 GAMESTATE_ENDING: "ステータス: ゲーム終了"
 
 #- ScoreBoard -#
+# 上限があることに注意してください (約32文字)
 
 # @randomint = スコアボードのみ、ランダムな数字を生成する(お遊び)
 # @playername = スコアボードのみ、プレイヤーの名前を表示する
