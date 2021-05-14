@@ -33,6 +33,16 @@ GAMESTATE_STARTING: "開始まで: @start 秒"
 GAMESTATE_PLAYING: "残り時間: @time 秒"
 GAMESTATE_ENDING: "ステータス: ゲーム終了"
 
+#- Sponge -#
+SCOREBOARD_IRON_TRUE: "§a破壊されていません"
+SCOREBOARD_IRON_FALSE: "§c破壊されています"
+
+SCOREBOARD_GOLD_TRUE: "§a破壊されていません"
+SCOREBOARD_GOLD_FALSE: "§c破壊されています"
+
+SCOREBOARD_DIAMOND_TRUE: "§a破壊されていません"
+SCOREBOARD_DIAMOND_FALSE: "§c破壊されています"
+
 #- ScoreBoard -#
 # 上限があることに注意してください (約32文字)
 
@@ -40,23 +50,32 @@ GAMESTATE_ENDING: "ステータス: ゲーム終了"
 # @playername = スコアボードのみ、プレイヤーの名前を表示する
 # @usedmem = スコアボードのみ、使ってるメモリー表示
 # @maxmem = スコアボードのみ、最大メモリー表示
-
+# @irons = スコアボードのみ、鉄(1)のスポンジのステータス表示
+# @golds = スコアボードのみ、金(2)のスポンジのステータス表示
+# @diamonds = スコアボードのみ、ダイヤ(3)のスポンジのステータス表示
 
 SCOREBOARD_TITLE: "§e§l攻城戦 (1.12.2)"
 
 SCOREBOARD_LINE10: ""
 SCOREBOARD_LINE9: " @state"
-SCOREBOARD_LINE8: ""
-SCOREBOARD_LINE7: ""
-SCOREBOARD_LINE6: ""
-SCOREBOARD_LINE5: ""
-SCOREBOARD_LINE4: ""
-SCOREBOARD_LINE3: ""
-SCOREBOARD_LINE2: ""
-SCOREBOARD_LINE1: "@usedmem"
+SCOREBOARD_LINE8: " "
+SCOREBOARD_LINE7: " "
+SCOREBOARD_LINE6: " スポンジ(1) » @irons"
+SCOREBOARD_LINE5: " §6スポンジ(2) » @golds"
+SCOREBOARD_LINE4: " §bスポンジ(3) » @diamonds"
+SCOREBOARD_LINE3: " "
+SCOREBOARD_LINE2: " "
+SCOREBOARD_LINE1: " §aメモリー > @usedmem / @maxmem MB"
 
 
 #- Team -#
-# 現在これも意味なし！ｗ
-RED_TEAM: "赤チーム"
-BLUE_TEAM: "青チーム"
+# 未実装、力尽きたようだ・・・
+RED_PREFIX: ""
+
+BLUE_PREFIX: ""
+
+ADMIN_PREFIX: ""
+
+#- Config Version-#
+# これはsettings.ymlが書き換えられてしまうので、変えないでください
+ConfigVersion: 1.1

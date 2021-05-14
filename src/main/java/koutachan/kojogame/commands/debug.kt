@@ -16,29 +16,33 @@ object debug : CommandExecutor {
     ): Boolean {
         if (args?.isNotEmpty()!!) {
             val player = sender as Player
-            if(args[0] == "0") {
+            if (args[0] == "0") {
                 playerdata[player.uniqueId]?.team = "Red"
                 player.sendMessage(":ok_hand:")
-            }else {
-                if(args[0] == "1") {
+            } else {
+                if (args[0] == "1") {
                     playerdata[player.uniqueId]?.team = "Blue"
                     player.sendMessage(":ok_hand:")
-                }else {
-                    if(args[0] == "2") {
+                } else {
+                    if (args[0] == "2") {
                         playerdata[player.uniqueId]?.team = "Default"
                         player.sendMessage(":ok_hand:")
-                    }else {
-                        if(args[0] == "3") {
+                    } else {
+                        if (args[0] == "3") {
                             var int = 0
-                            for(test in Bukkit.getOnlinePlayers()){
+                            for (test in Bukkit.getOnlinePlayers()) {
                                 int++
                             }
                             sender.sendMessage("$int")
+                        } else {
+                            if (args[0] == "4") {
+                                playerdata[player.uniqueId]?.team = "Admin"
+                                player.sendMessage(":ok_hand:")
+                            }
                         }
                     }
                 }
             }
         }
-    return true
-    }
+    return true}
 }

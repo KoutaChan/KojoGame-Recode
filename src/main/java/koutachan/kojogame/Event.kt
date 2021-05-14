@@ -16,6 +16,7 @@ import org.bukkit.event.block.Action
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.PlayerDeathEvent
+import org.bukkit.event.player.AsyncPlayerChatEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerJoinEvent
 
@@ -98,6 +99,7 @@ object Event : Listener {
                     plugin.config.set("iron.y", e.clickedBlock.y)
                     plugin.config.set("iron.z", e.clickedBlock.z)
                     plugin.saveConfig()
+                    e.clickedBlock.type = Material.SPONGE
                     e.player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent("§n結果 world: ${e.clickedBlock.world.name} x: ${e.clickedBlock.x} y: ${e.clickedBlock.y} z: ${e.clickedBlock.z}"))
                 }
                 "§6§l金の棒" -> {
@@ -106,6 +108,7 @@ object Event : Listener {
                     plugin.config.set("gold.y", e.clickedBlock.y)
                     plugin.config.set("gold.z", e.clickedBlock.z)
                     plugin.saveConfig()
+                    e.clickedBlock.type = Material.SPONGE
                     e.player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent("§6§n結果 world: ${e.clickedBlock.world.name} x: ${e.clickedBlock.x} y: ${e.clickedBlock.y} z: ${e.clickedBlock.z}"))
                 }
                 "§b§lダイヤの棒" -> {
@@ -114,6 +117,7 @@ object Event : Listener {
                     plugin.config.set("diamond.y", e.clickedBlock.y)
                     plugin.config.set("diamond.z", e.clickedBlock.z)
                     plugin.saveConfig()
+                    e.clickedBlock.type = Material.SPONGE
                     e.player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent("§b§n結果 world: ${e.clickedBlock.world.name} x: ${e.clickedBlock.x} y: ${e.clickedBlock.y} z: ${e.clickedBlock.z}"))
                 }
             }
@@ -125,5 +129,29 @@ object Event : Listener {
         Bukkit.getScheduler().runTaskLater(plugin, {
             (e.entity.player as CraftPlayer).handle.playerConnection.a(PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN))
         },3)
+    }
+
+    @EventHandler
+    fun AsyncPlayerChatEvent(e: AsyncPlayerChatEvent){
+        var teamname = ""
+        when(playerdata[e.player.uniqueId]?.team){
+            "Red" -> {teamname = "§c[赤チーム]"}
+            "Blue" -> {teamname = "§9[青チーム]"}
+            "Admin" -> {teamname = "§6[運営]"}
+        }
+        e.isCancelled = true
+        if(!e.message.startsWith("!") && playerdata[e.player.uniqueId]?.team != "Default") {
+            for (team in Bukkit.getOnlinePlayers()) {
+                if (playerdata[team.uniqueId]?.team == playerdata[e.player.uniqueId]?.team) {
+                    team.sendMessage("$teamname${e.player.name}: §r${e.message}")
+                }
+            }
+        }else {
+            if(e.message.replaceFirst("!","").isNotEmpty()) {
+                Bukkit.broadcastMessage("§5[Global] $teamname${e.player.name}: §r${e.message.replaceFirst("!", "")}")
+            }else{
+                e.player.sendMessage("§cEvent1 何かを入力してください")
+            }
+        }
     }
 }

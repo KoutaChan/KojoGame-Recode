@@ -15,8 +15,7 @@ object Ping : CommandExecutor {
         args: Array<out String>?
     ): Boolean {
         if(sender is Player) {
-            val ping = (sender as CraftPlayer).handle.ping
-            when(ping){
+            when(val ping = (sender as CraftPlayer).handle.ping){
                 in 0..100 -> {sender.sendMessage("${ChatColor.GREEN}Your Ping: $ping ms")}
                 in 101..250 -> {sender.sendMessage("${ChatColor.YELLOW}Your Ping: $ping ms")}
                 else -> {sender.sendMessage("${ChatColor.RED}Your Ping: $ping ms")}

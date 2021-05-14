@@ -1,22 +1,25 @@
 package koutachan.kojogame
 
 
-import koutachan.kojogame.commands.Ping
-import koutachan.kojogame.commands.Start
-import koutachan.kojogame.commands.debug
-import koutachan.kojogame.commands.giveStick
+import koutachan.kojogame.commands.*
 import org.bukkit.plugin.java.JavaPlugin
 import koutachan.kojogame.game.GameState.*
-import koutachan.kojogame.langMessage.lang
 import koutachan.kojogame.runTask.ScoreBoard
 import org.bukkit.configuration.file.YamlConfiguration
+import org.fusesource.jansi.Ansi
 import java.io.File
 import java.util.*
 import kotlin.collections.HashMap
 
+    // val
+    val SettingsFile = File("plugins/KojoGame/settings.yml")
 
-val SettingsFile = File("plugins/KojoGame/settings.yml")
+    const val SettingsVersion = 1.1
 
+    val maxmem = Runtime.getRuntime().totalMemory() / 1048576
+
+
+    // var
     var GameState = LOBBY
     var SpongeIron = true
     var SpongeGold = true
@@ -24,7 +27,7 @@ val SettingsFile = File("plugins/KojoGame/settings.yml")
     var playerdata = HashMap<UUID, PlayerData>()
     var starttime = 0
     var time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
-    var maxmem: Long = 0
+
 
 
 class KojoGame : JavaPlugin() {
@@ -41,15 +44,21 @@ class KojoGame : JavaPlugin() {
         getCommand("debug").executor = debug
         getCommand("start").executor = Start
         getCommand("ping").executor = Ping
+        getCommand("kojolist").executor = KojoList
         // Add config.yml
         saveDefaultConfig()
-        //???
+        // ???
         ScoreBoard.ScoreBoardUpdate()
-        maxmem = Runtime.getRuntime().totalMemory() / 1048576
 
-        //Custom Config
+        // Custom Config
         if(!SettingsFile.exists()) {
             saveResource("settings.yml", false)
+            time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
+        }
+        if(YamlConfiguration.loadConfiguration(SettingsFile).getDouble("ConfigVersion") != SettingsVersion){
+            logger.info("${Ansi.ansi().fg(Ansi.Color.RED)}settings.ymlのバージョンが一致していないため、再生成します。${Ansi.ansi().a(Ansi.Attribute.RESET)}")
+            saveResource("settings.yml",true)
+            logger.info("${Ansi.ansi().fg(Ansi.Color.GREEN).bold()}settings.ymlの再生成に成功しました。 ${Ansi.ansi().a(Ansi.Attribute.RESET)}")
             time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
         }
         // Plugin startup logic

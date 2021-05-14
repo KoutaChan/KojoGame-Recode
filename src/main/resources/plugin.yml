@@ -8,5 +8,7 @@ commands:
     permission: kojogame.debug
   start:
     permission: kojogame.start
+  kojolist:
+    aliases: team-list
   ping:
-    usage: /ping
+    aliases: latency
