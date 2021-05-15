@@ -1,7 +1,9 @@
 package koutachan.kojogame
 
 import koutachan.kojogame.KojoGame.Companion.plugin
+import koutachan.kojogame.game.GameEnd
 import koutachan.kojogame.game.GameState.*
+import koutachan.kojogame.langMessage.lang
 import koutachan.kojogame.runTask.ScoreBoard
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
@@ -9,6 +11,7 @@ import net.minecraft.server.v1_12_R1.PacketPlayInClientCommand
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Material
+import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -74,8 +77,14 @@ object Event : Listener {
                         e.isCancelled = false
                     }
                     if (!e.isCancelled && !SpongeIron && !SpongeGold && !SpongeDiamond) {
-                        Bukkit.broadcastMessage("テストーｗ")
-                        /*TODO: Add End*/
+                        time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
+                        Bukkit.broadcastMessage(lang.MESSAGE_TELEPORT_TO_LOBBY5.replace("@state", GameState.toString().replace("LOBBY","${lang.config.get("GAMESTATE_LOBBY")}").replace("STARTING","${lang.config.get("GAMESTATE_STARTING")}").replace("PLAYING","${lang.config.get("GAMESTATE_PLAYING")}").replace("ENDING","${lang.config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time"))
+                        GameState = ENDING
+                        Bukkit.getScheduler().runTaskLater(plugin, {
+                            GameState = LOBBY
+                            Bukkit.broadcastMessage(lang.MESSAGE_TELEPORT_TO_LOBBY.replace("@state", GameState.toString().replace("LOBBY","${lang.config.get("GAMESTATE_LOBBY")}").replace("STARTING","${lang.config.get("GAMESTATE_STARTING")}").replace("PLAYING","${lang.config.get("GAMESTATE_PLAYING")}").replace("ENDING","${lang.config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time"))
+                            GameEnd.GameEnd()
+                        },20 * 5)
                     }
                 }
             }

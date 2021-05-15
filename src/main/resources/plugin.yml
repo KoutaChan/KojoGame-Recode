@@ -8,6 +8,8 @@ commands:
     permission: kojogame.debug
   start:
     permission: kojogame.start
+  setspawn:
+    permission: kojogame.setspawn
   kojolist:
     aliases: team-list
   ping:

@@ -43,6 +43,7 @@ class KojoGame : JavaPlugin() {
         getCommand("givestick").executor = giveStick
         getCommand("debug").executor = debug
         getCommand("start").executor = Start
+        getCommand("setspawn").executor = SetSpawn
         getCommand("ping").executor = Ping
         getCommand("kojolist").executor = KojoList
         // Add config.yml
@@ -58,7 +59,7 @@ class KojoGame : JavaPlugin() {
         if(YamlConfiguration.loadConfiguration(SettingsFile).getDouble("ConfigVersion") != SettingsVersion){
             logger.info("${Ansi.ansi().fg(Ansi.Color.RED)}settings.ymlのバージョンが一致していないため、再生成します。${Ansi.ansi().a(Ansi.Attribute.RESET)}")
             saveResource("settings.yml",true)
-            logger.info("${Ansi.ansi().fg(Ansi.Color.GREEN).bold()}settings.ymlの再生成に成功しました。 ${Ansi.ansi().a(Ansi.Attribute.RESET)}")
+            logger.info("${Ansi.ansi().fg(Ansi.Color.GREEN)}settings.ymlの再生成に成功しました。 ${Ansi.ansi().a(Ansi.Attribute.RESET)}")
             time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
         }
         // Plugin startup logic
