@@ -2,15 +2,13 @@
 
 package koutachan.kojogame.commands
 
-import koutachan.kojogame.GameState
+import koutachan.kojogame.*
 import koutachan.kojogame.KojoGame.Companion.plugin
-import koutachan.kojogame.SettingsFile
 import koutachan.kojogame.game.GameState.*
 import koutachan.kojogame.game.Timer.Timer
 import koutachan.kojogame.langMessage.lang
-import koutachan.kojogame.starttime
-import koutachan.kojogame.time
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.Sound
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -41,6 +39,24 @@ object Start : CommandExecutor{
                     } else {
                         for (p in Bukkit.getOnlinePlayers()) {
                             p.sendTitle(lang.TITLE_START.replace("@state", GameState.toString().replace("LOBBY","${lang.config.get("GAMESTATE_LOBBY")}").replace("STARTING","${lang.config.get("GAMESTATE_STARTING")}").replace("PLAYING","${lang.config.get("GAMESTATE_PLAYING")}").replace("ENDING","${lang.config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time"), "")
+                            when(playerdata[p.uniqueId]?.team) {
+                                "Red" -> {
+                                    p.teleport(Location(Bukkit.getWorld("${plugin.config.get("red.world")}"),
+                                    plugin.config.getDouble("red.x"),
+                                    plugin.config.getDouble("red.y"),
+                                    plugin.config.getDouble("red.z"),
+                                    plugin.config.getDouble("red.yaw").toFloat(),
+                                    plugin.config.getDouble("red.pitch").toFloat()))
+                                }
+                                "Blue" -> {
+                                    p.teleport(Location(Bukkit.getWorld("${plugin.config.get("blue.world")}"),
+                                    plugin.config.getDouble("blue.x"),
+                                    plugin.config.getDouble("blue.y"),
+                                    plugin.config.getDouble("blue.z"),
+                                    plugin.config.getDouble("blue.yaw").toFloat(),
+                                    plugin.config.getDouble("blue.pitch").toFloat()))
+                                }
+                            }
                         }
                         Bukkit.broadcastMessage(lang.MESSAGE_START.replace("@state", GameState.toString().replace("LOBBY","${lang.config.get("GAMESTATE_LOBBY")}").replace("STARTING","${lang.config.get("GAMESTATE_STARTING")}").replace("PLAYING","${lang.config.get("GAMESTATE_PLAYING")}").replace("ENDING","${lang.config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time"))
                         GameState = PLAYING

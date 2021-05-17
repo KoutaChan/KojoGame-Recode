@@ -2,8 +2,9 @@ package koutachan.kojogame
 
 import koutachan.kojogame.KojoGame.Companion.plugin
 import koutachan.kojogame.game.GameEnd
-import koutachan.kojogame.game.GameState.*
-import koutachan.kojogame.langMessage.lang
+import koutachan.kojogame.game.GameState.LOBBY
+import koutachan.kojogame.game.GameState.PLAYING
+import koutachan.kojogame.langMessage.lang.config
 import koutachan.kojogame.runTask.ScoreBoard
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
@@ -11,7 +12,6 @@ import net.minecraft.server.v1_12_R1.PacketPlayInClientCommand
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Material
-import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -28,9 +28,6 @@ object Event : Listener {
     fun PlayerJoinEvent(e: PlayerJoinEvent) {
         e.joinMessage = ""
         ScoreBoard.ScoreBoard(e.player)
-        if (!playerdata.containsKey(e.player.uniqueId)) {
-            playerdata[e.player.uniqueId] = PlayerData()
-        }
         //val inta = 0
         //val intb = 0
         //if(inta < intb) {
@@ -77,14 +74,7 @@ object Event : Listener {
                         e.isCancelled = false
                     }
                     if (!e.isCancelled && !SpongeIron && !SpongeGold && !SpongeDiamond) {
-                        time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
-                        Bukkit.broadcastMessage(lang.MESSAGE_TELEPORT_TO_LOBBY5.replace("@state", GameState.toString().replace("LOBBY","${lang.config.get("GAMESTATE_LOBBY")}").replace("STARTING","${lang.config.get("GAMESTATE_STARTING")}").replace("PLAYING","${lang.config.get("GAMESTATE_PLAYING")}").replace("ENDING","${lang.config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time"))
-                        GameState = ENDING
-                        Bukkit.getScheduler().runTaskLater(plugin, {
-                            GameState = LOBBY
-                            Bukkit.broadcastMessage(lang.MESSAGE_TELEPORT_TO_LOBBY.replace("@state", GameState.toString().replace("LOBBY","${lang.config.get("GAMESTATE_LOBBY")}").replace("STARTING","${lang.config.get("GAMESTATE_STARTING")}").replace("PLAYING","${lang.config.get("GAMESTATE_PLAYING")}").replace("ENDING","${lang.config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time"))
-                            GameEnd.GameEnd()
-                        },20 * 5)
+                        GameEnd.GameEnd()
                     }
                 }
             }
@@ -141,25 +131,31 @@ object Event : Listener {
     }
 
     @EventHandler
-    fun AsyncPlayerChatEvent(e: AsyncPlayerChatEvent){
+    fun AsyncPlayerChatEvent(e: AsyncPlayerChatEvent) {
         var teamname = ""
-        when(playerdata[e.player.uniqueId]?.team){
-            "Red" -> {teamname = "§c[赤チーム]"}
-            "Blue" -> {teamname = "§9[青チーム]"}
-            "Admin" -> {teamname = "§6[運営]"}
+        when (playerdata[e.player.uniqueId]?.team) {
+            "Red" -> {
+                teamname = "${config.get("RED_CHAT_PREFIX")}"
+            }
+            "Blue" -> {
+                teamname = "${config.get("BLUE_CHAT_PREFIX")}"
+            }
+            "Admin" -> {
+                teamname = "${config.get("ADMIN_CHAT_PREFIX")}"
+            }
         }
         e.isCancelled = true
-        if(!e.message.startsWith("!") && playerdata[e.player.uniqueId]?.team != "Default") {
+        if (!e.message.startsWith("!") && playerdata[e.player.uniqueId]?.team != "Default") {
             for (team in Bukkit.getOnlinePlayers()) {
                 if (playerdata[team.uniqueId]?.team == playerdata[e.player.uniqueId]?.team) {
                     team.sendMessage("$teamname${e.player.name}: §r${e.message}")
                 }
             }
-        }else {
-            if(e.message.replaceFirst("!","").isNotEmpty()) {
+        } else {
+            if (e.message.replaceFirst("!", "").isNotEmpty()) {
                 Bukkit.broadcastMessage("§5[Global] $teamname${e.player.name}: §r${e.message.replaceFirst("!", "")}")
-            }else{
-                e.player.sendMessage("§cEvent1 何かを入力してください")
+            } else {
+                e.player.sendMessage("§c何かを入力してください")
             }
         }
     }

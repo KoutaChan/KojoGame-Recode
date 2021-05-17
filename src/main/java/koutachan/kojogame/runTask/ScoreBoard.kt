@@ -62,21 +62,21 @@ object ScoreBoard {
         if (red == null) {
             red = scoreboard.registerNewTeam("Red")
         }
-        red.prefix = "§c"
+        red.prefix = "${config.get("RED_PREFIX")}"
         red.setAllowFriendlyFire(false)
 
         var blue = scoreboard.getTeam("Blue")
         if (blue == null) {
             blue = scoreboard.registerNewTeam("Blue")
         }
-        blue.prefix = "§9"
+        blue.prefix = "${config.get("BLUE_PREFIX")}"
         blue.setAllowFriendlyFire(false)
 
         var admin = scoreboard.getTeam("Admin")
         if (admin == null) {
             admin = scoreboard.registerNewTeam("Admin")
         }
-        admin.prefix = "§6[運営]"
+        admin.prefix = "${config.get("ADMIN_PREFIX")}"
         admin.setAllowFriendlyFire(false)
 
         player.scoreboard = scoreboard
@@ -88,6 +88,10 @@ object ScoreBoard {
     fun ScoreBoardUpdate(){
         Bukkit.getScheduler().runTaskTimer(plugin, {
             for (player in Bukkit.getOnlinePlayers()) {
+
+                if (!playerdata.containsKey(player.uniqueId)) {
+                    playerdata[player.uniqueId] = PlayerData()
+                }
 
                 player.scoreboard.getObjective("KojoGame").displayName = lang.TITLE_SCOREBOARD.replace("@state", GameState.toString().replace("LOBBY","${config.get("GAMESTATE_LOBBY")}").replace("STARTING","${config.get("GAMESTATE_STARTING")}").replace("PLAYING","${config.get("GAMESTATE_PLAYING")}").replace("ENDING","${config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time").replace("@randomint","${Random.nextInt(100000)}").replace("@playername",player.name).replace("@usedmem","${(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576}").replace("@maxmem", "$maxmem").replace("@irons","$SpongeIron".replace("true","${config.get("SCOREBOARD_IRON_TRUE")}").replace("false","${config.get("SCOREBOARD_IRON_FALSE")}")).replace("@golds","$SpongeGold".replace("true","${config.get("SCOREBOARD_IRON_TRUE")}").replace("false","${config.get("SCOREBOARD_GOLD_FALSE")}")).replace("@diamonds","$SpongeDiamond".replace("true","${config.get("SCOREBOARD_DIAMOND_TRUE")}").replace("false","${config.get("SCOREBOARD_DIAMOND_FALSE")}"))
 

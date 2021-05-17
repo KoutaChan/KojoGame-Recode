@@ -14,7 +14,7 @@ import kotlin.collections.HashMap
     // val
     val SettingsFile = File("plugins/KojoGame/settings.yml")
 
-    const val SettingsVersion = 1.1
+    const val SettingsVersion = 1.2
 
     val maxmem = Runtime.getRuntime().totalMemory() / 1048576
 

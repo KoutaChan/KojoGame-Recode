@@ -26,7 +26,6 @@ TELEPORT_TO_LOBBY5: "§75秒後にロビーにテレポートします..."
 TELEPORT_TO_LOBBY: "§7ロビーにテレポート中..."
 
 #- GameState -#
-#- FIXED(beta-1.0): @time @start が使えるように -#
 
 GAMESTATE_LOBBY: "ステータス: ゲーム待機中"
 GAMESTATE_STARTING: "開始まで: @start 秒"
@@ -70,12 +69,15 @@ SCOREBOARD_LINE1: " §aメモリー > @usedmem / @maxmem MB"
 
 #- Team -#
 # 未実装、力尽きたようだ・・・
-RED_PREFIX: ""
+RED_PREFIX: "§c"
+RED_CHAT_PREFIX: "§c[赤チーム]"
 
-BLUE_PREFIX: ""
+BLUE_PREFIX: "§9"
+BLUE_CHAT_PREFIX: "§9[青チーム]"
 
-ADMIN_PREFIX: ""
+ADMIN_PREFIX: "§6[運営]"
+ADMIN_CHAT_PREFIX: "§6[運営]"
 
 #- Config Version-#
 # これはsettings.ymlが書き換えられてしまうので、変えないでください
-ConfigVersion: 1.1
+ConfigVersion: 1.2
