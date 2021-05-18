@@ -1,16 +1,18 @@
 package koutachan.kojogame.game
 
-import koutachan.kojogame.*
-import koutachan.kojogame.game.GameState.*
-import koutachan.kojogame.langMessage.lang
-import org.bukkit.Bukkit
-import org.bukkit.configuration.file.YamlConfiguration
+import koutachan.kojogame.GameState
+import koutachan.kojogame.KojoGame
+import koutachan.kojogame.game.GameState.PLAYING
+import koutachan.kojogame.time
 import org.bukkit.scheduler.BukkitRunnable
 
 object Timer {
     fun Timer() {
         object : BukkitRunnable() {
             override fun run() {
+                if (GameState != PLAYING){
+                    cancel()
+                }
                 time--
                 if (time <= 0) {
                     GameEnd.GameEnd()

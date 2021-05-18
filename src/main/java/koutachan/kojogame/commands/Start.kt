@@ -5,6 +5,7 @@ package koutachan.kojogame.commands
 import koutachan.kojogame.*
 import koutachan.kojogame.KojoGame.Companion.plugin
 import koutachan.kojogame.game.GameState.*
+import koutachan.kojogame.game.ResetSponge
 import koutachan.kojogame.game.Timer.Timer
 import koutachan.kojogame.langMessage.lang
 import org.bukkit.Bukkit
@@ -58,6 +59,7 @@ object Start : CommandExecutor{
                                 }
                             }
                         }
+                        ResetSponge.ResetSponge()
                         Bukkit.broadcastMessage(lang.MESSAGE_START.replace("@state", GameState.toString().replace("LOBBY","${lang.config.get("GAMESTATE_LOBBY")}").replace("STARTING","${lang.config.get("GAMESTATE_STARTING")}").replace("PLAYING","${lang.config.get("GAMESTATE_PLAYING")}").replace("ENDING","${lang.config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time"))
                         GameState = PLAYING
                         starttime--

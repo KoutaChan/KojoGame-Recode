@@ -11,13 +11,16 @@ import net.md_5.bungee.api.chat.TextComponent
 import net.minecraft.server.v1_12_R1.PacketPlayInClientCommand
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
+import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
+import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.AsyncPlayerChatEvent
 import org.bukkit.event.player.PlayerInteractEvent
@@ -124,10 +127,36 @@ object Event : Listener {
     }
 
     @EventHandler
-    fun PlayerDeathEvent(e: PlayerDeathEvent){
+    fun PlayerDeathEvent(e: PlayerDeathEvent) {
         Bukkit.getScheduler().runTaskLater(plugin, {
+            when (playerdata[e.entity.player.uniqueId]?.team) {
+                "Red" -> {
+                    e.entity.player.setBedSpawnLocation(Location(Bukkit.getWorld("${plugin.config.get("red.world")}"),
+                        plugin.config.getDouble("red.x"),
+                        plugin.config.getDouble("red.y"),
+                        plugin.config.getDouble("red.z"),
+                        plugin.config.getDouble("red.yaw").toFloat(),
+                        plugin.config.getDouble("red.pitch").toFloat()), true)
+                }
+                "Blue" -> {
+                    e.entity.player.setBedSpawnLocation(Location(Bukkit.getWorld("${plugin.config.get("blue.world")}"),
+                        plugin.config.getDouble("blue.x"),
+                        plugin.config.getDouble("blue.y"),
+                        plugin.config.getDouble("blue.z"),
+                        plugin.config.getDouble("blue.yaw").toFloat(),
+                        plugin.config.getDouble("blue.pitch").toFloat()), true)
+                }
+                else -> {
+                    e.entity.player.setBedSpawnLocation(Location(Bukkit.getWorld("${plugin.config.get("lobby.world")}"),
+                        plugin.config.getDouble("lobby.x"),
+                        plugin.config.getDouble("lobby.y"),
+                        plugin.config.getDouble("lobby.z"),
+                        plugin.config.getDouble("lobby.yaw").toFloat(),
+                        plugin.config.getDouble("lobby.pitch").toFloat()), true)
+                }
+            }
             (e.entity.player as CraftPlayer).handle.playerConnection.a(PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN))
-        },3)
+        },2)
     }
 
     @EventHandler
@@ -156,6 +185,15 @@ object Event : Listener {
                 Bukkit.broadcastMessage("§5[Global] $teamname${e.player.name}: §r${e.message.replaceFirst("!", "")}")
             } else {
                 e.player.sendMessage("§c何かを入力してください")
+            }
+        }
+    }
+
+    @EventHandler
+    fun EntityDamageEvent(e: EntityDamageEvent) {
+        if(e.entity is Player){
+            if(GameState != PLAYING || playerdata[e.entity.uniqueId]?.team == "Default"){
+                e.isCancelled = true
             }
         }
     }

@@ -2,8 +2,9 @@ package koutachan.kojogame.game
 
 import koutachan.kojogame.*
 import koutachan.kojogame.KojoGame.Companion.plugin
+import koutachan.kojogame.game.GameState.ENDING
+import koutachan.kojogame.game.GameState.LOBBY
 import koutachan.kojogame.langMessage.lang
-import koutachan.kojogame.game.GameState.*
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.configuration.file.YamlConfiguration
@@ -24,6 +25,7 @@ object GameEnd {
                     plugin.config.getDouble("lobby.z"),
                     plugin.config.getDouble("lobby.yaw").toFloat(),
                     plugin.config.getDouble("lobby.pitch").toFloat()))
+                ResetSponge.ResetSponge()
                 SpongeIron = true
                 SpongeGold = true
                 SpongeDiamond = true

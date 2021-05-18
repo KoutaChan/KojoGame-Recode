@@ -2,10 +2,11 @@ package koutachan.kojogame
 
 
 import koutachan.kojogame.commands.*
-import org.bukkit.plugin.java.JavaPlugin
-import koutachan.kojogame.game.GameState.*
+import koutachan.kojogame.game.GameState.LOBBY
+import koutachan.kojogame.game.ResetSponge
 import koutachan.kojogame.runTask.ScoreBoard
 import org.bukkit.configuration.file.YamlConfiguration
+import org.bukkit.plugin.java.JavaPlugin
 import org.fusesource.jansi.Ansi
 import java.io.File
 import java.util.*
@@ -50,7 +51,7 @@ class KojoGame : JavaPlugin() {
         saveDefaultConfig()
         // ???
         ScoreBoard.ScoreBoardUpdate()
-
+        ResetSponge.ResetSponge()
         // Custom Config
         if(!SettingsFile.exists()) {
             saveResource("settings.yml", false)
