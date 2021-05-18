@@ -11,7 +11,7 @@ import kotlin.random.Random
 
 object ScoreBoard {
 
-    fun ScoreBoard(player: Player) {
+    fun scoreboard(player: Player) {
         val scoreboard = Bukkit.getScoreboardManager().newScoreboard
         val p = scoreboard.registerNewObjective("KojoGame", "dummy")
 
@@ -85,7 +85,7 @@ object ScoreBoard {
 
 
     @Suppress("DEPRECATION")
-    fun ScoreBoardUpdate(){
+    fun scoreboardupdate(){
         Bukkit.getScheduler().runTaskTimer(plugin, {
             for (player in Bukkit.getOnlinePlayers()) {
 

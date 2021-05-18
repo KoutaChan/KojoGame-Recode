@@ -1,11 +1,12 @@
 package koutachan.kojogame
 
 import koutachan.kojogame.KojoGame.Companion.plugin
-import koutachan.kojogame.game.GameEnd
+import koutachan.kojogame.game.GameEnd.gameend
 import koutachan.kojogame.game.GameState.LOBBY
 import koutachan.kojogame.game.GameState.PLAYING
 import koutachan.kojogame.langMessage.lang.config
-import koutachan.kojogame.runTask.ScoreBoard
+import koutachan.kojogame.runTask.ScoreBoard.scoreboard
+import koutachan.kojogame.util.ItemCreator.itemcreator
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
 import net.minecraft.server.v1_12_R1.PacketPlayInClientCommand
@@ -15,6 +16,7 @@ import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.entity.Player
+import org.bukkit.entity.Villager
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
@@ -23,6 +25,7 @@ import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.AsyncPlayerChatEvent
+import org.bukkit.event.player.PlayerInteractEntityEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerJoinEvent
 
@@ -30,15 +33,7 @@ object Event : Listener {
     @EventHandler
     fun PlayerJoinEvent(e: PlayerJoinEvent) {
         e.joinMessage = ""
-        ScoreBoard.ScoreBoard(e.player)
-        //val inta = 0
-        //val intb = 0
-        //if(inta < intb) {
-        //    Bukkit.broadcastMessage("testA")
-        //}else {
-        //    Bukkit.broadcastMessage("testB")
-        //}
-        /*TODO: Add Team*/
+        scoreboard(e.player)
     }
 
     //メモ(青) : 攻め
@@ -77,7 +72,7 @@ object Event : Listener {
                         e.isCancelled = false
                     }
                     if (!e.isCancelled && !SpongeIron && !SpongeGold && !SpongeDiamond) {
-                        GameEnd.GameEnd()
+                        gameend()
                     }
                 }
             }
@@ -195,6 +190,18 @@ object Event : Listener {
             if(GameState != PLAYING || playerdata[e.entity.uniqueId]?.team == "Default"){
                 e.isCancelled = true
             }
+        }
+    }
+
+    @EventHandler
+    fun PlayerInteractEntityEvent(e: PlayerInteractEntityEvent){
+        if(e.rightClicked is Villager) {
+            e.isCancelled = true
+            val inv = Bukkit.createInventory(null,27,"gui")
+            inv.setItem(2, itemcreator(Material.STICK,64,"今日はいい天気だ！","lore1","lore2"))
+            e.player.openInventory(inv)
+            e.player.inventory.addItem(itemcreator(Material.ICE,1,"ああ","1","2","3"))
+            Bukkit.broadcastMessage("h")
         }
     }
 }

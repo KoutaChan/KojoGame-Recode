@@ -3,8 +3,8 @@ package koutachan.kojogame
 
 import koutachan.kojogame.commands.*
 import koutachan.kojogame.game.GameState.LOBBY
-import koutachan.kojogame.game.ResetSponge
-import koutachan.kojogame.runTask.ScoreBoard
+import koutachan.kojogame.game.ResetSponge.resetsponge
+import koutachan.kojogame.runTask.ScoreBoard.scoreboardupdate
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
 import org.fusesource.jansi.Ansi
@@ -41,7 +41,7 @@ class KojoGame : JavaPlugin() {
         // Register Event
         server.pluginManager.registerEvents(Event,this)
         // Register Command
-        getCommand("givestick").executor = giveStick
+        getCommand("givestick").executor = GiveStick
         getCommand("debug").executor = debug
         getCommand("start").executor = Start
         getCommand("setspawn").executor = SetSpawn
@@ -50,8 +50,8 @@ class KojoGame : JavaPlugin() {
         // Add config.yml
         saveDefaultConfig()
         // ???
-        ScoreBoard.ScoreBoardUpdate()
-        ResetSponge.ResetSponge()
+        scoreboardupdate()
+        resetsponge()
         // Custom Config
         if(!SettingsFile.exists()) {
             saveResource("settings.yml", false)

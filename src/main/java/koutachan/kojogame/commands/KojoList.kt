@@ -13,20 +13,20 @@ object KojoList : CommandExecutor {
         label: String?,
         args: Array<out String>?
     ): Boolean {
-        var All = 0
-        var Red = 0
-        var Blue = 0
+        var all = 0
+        var red = 0
+        var blue = 0
         for (list in Bukkit.getOnlinePlayers()) {
-            All++
+            all++
             when(playerdata[list.uniqueId]?.team){
-                "Red" -> {Red++}
-                "Blue" -> {Blue++}
+                "Red" -> {red++}
+                "Blue" -> {blue++}
             }
         }
         sender?.sendMessage("§m---------------------------------------")
-        sender?.sendMessage("現在のオンラインプレイヤー: $All")
-        sender?.sendMessage("§c現在のオンラインプレイヤー(赤): $Red")
-        sender?.sendMessage("§9現在のオンラインプレイヤー(青): $Blue")
+        sender?.sendMessage("現在のオンラインプレイヤー: $all")
+        sender?.sendMessage("§c現在のオンラインプレイヤー(赤): $red")
+        sender?.sendMessage("§9現在のオンラインプレイヤー(青): $blue")
         sender?.sendMessage("§m---------------------------------------")
     return true
     }
