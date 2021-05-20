@@ -68,7 +68,12 @@ SCOREBOARD_LINE1: " §aメモリー > @usedmem / @maxmem MB"
 
 
 #- Team -#
-# 未実装、力尽きたようだ・・・
+
+
+# DEFAULTは未実装
+DEFAULT_PREFIX: "§7"
+DEFAULT_CHAT_PREFIX: "[Global]"
+
 RED_PREFIX: "§c"
 RED_CHAT_PREFIX: "§c[赤チーム]"
 
