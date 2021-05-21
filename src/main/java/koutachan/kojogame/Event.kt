@@ -7,13 +7,11 @@ import koutachan.kojogame.game.GameState.PLAYING
 import koutachan.kojogame.langMessage.lang.config
 import koutachan.kojogame.runTask.ScoreBoard.scoreboard
 import koutachan.kojogame.util.ItemCreator.itemcreator
+import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
 import net.minecraft.server.v1_12_R1.PacketPlayInClientCommand
-import org.bukkit.Bukkit
-import org.bukkit.GameMode
-import org.bukkit.Location
-import org.bukkit.Material
+import org.bukkit.*
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.entity.Player
 import org.bukkit.entity.Villager
@@ -24,10 +22,10 @@ import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
-import org.bukkit.event.player.AsyncPlayerChatEvent
-import org.bukkit.event.player.PlayerInteractEntityEvent
-import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.event.player.*
+import org.bukkit.inventory.meta.PotionMeta
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
 
 object Event : Listener {
     @EventHandler
@@ -40,7 +38,7 @@ object Event : Listener {
     //メモ(赤) : 守り
 
     @EventHandler
-    fun BreakEvent(e: BlockBreakEvent) {
+    fun BlockBreakEvent(e: BlockBreakEvent) {
         if (e.player.gameMode != GameMode.CREATIVE) {
             if (e.block.type != Material.SPONGE) {
                 e.isCancelled = true
@@ -80,7 +78,7 @@ object Event : Listener {
     }
 
     @EventHandler
-    fun PlaceEvent(e: BlockPlaceEvent) {
+    fun BlockPlaceEvent(e: BlockPlaceEvent) {
         if (e.player.gameMode != GameMode.CREATIVE) {
             e.isCancelled = true
         }
@@ -197,11 +195,31 @@ object Event : Listener {
     fun PlayerInteractEntityEvent(e: PlayerInteractEntityEvent){
         if(e.rightClicked is Villager) {
             e.isCancelled = true
-            val inv = Bukkit.createInventory(null,27,"gui")
-            inv.setItem(2, itemcreator(Material.STICK,64,"今日はいい天気だ！","lore1","lore2"))
+            val inv = Bukkit.createInventory(null,27,"${ChatColor.GREEN}ショップ")
+            val potion = itemcreator(Material.POTION,1,0,"${ChatColor.AQUA}ポーション ${ChatColor.GOLD}(スポンジ 1個)")
+            val potionMeta = (potion.itemMeta as PotionMeta)
+            potionMeta.addCustomEffect(PotionEffect(PotionEffectType.SPEED,20 * 60,1),true)
+            potionMeta.addCustomEffect(PotionEffect(PotionEffectType.INCREASE_DAMAGE,20 * 60 * 2,1),true)
+            potionMeta.addCustomEffect(PotionEffect(PotionEffectType.REGENERATION,20 * 60 * 5,1),true)
+            potionMeta.color = Color.AQUA
+            potion.itemMeta = potionMeta
+
+            inv.setItem(0, itemcreator(Material.STAINED_GLASS_PANE,1, 5,"${ChatColor.GREEN}ポーション類"))
+            inv.setItem(1, potion)
+            inv.setItem(9, itemcreator(Material.STAINED_GLASS_PANE,1,14,"${ChatColor.RED}剣/防御"))
+            inv.setItem(18, itemcreator(Material.STAINED_GLASS_PANE,1,4,"${ChatColor.YELLOW}その他"))
+            //inv.setItem(0, itemcreator(Material.POTION,1,"${ChatColor.AQUA}ポーション","${ChatColor.GREEN}ポーション効果:","${ChatColor.AQUA}スピード2(1分)","${ChatColor.RED}攻撃力上昇2(2分)","${ChatColor.LIGHT_PURPLE}再生2(5分)","","${ChatColor.GOLD}これを買うにはスポンジが1個必要"))
+            //inv.setItem(2, itemcreator(Material.STICK,64,0,"今日はいい天気だ！","lore1","lore2"))
             e.player.openInventory(inv)
-            e.player.inventory.addItem(itemcreator(Material.ICE,1,"ああ","1","2","3"))
+            e.player.inventory.addItem(itemcreator(Material.ICE,1,1,"ああ","1","2","3"))
             Bukkit.broadcastMessage("h")
+        }
+    }
+
+    @EventHandler
+    fun PlayerDropItemEvent(e: PlayerDropItemEvent){
+        if(playerdata[e.player.uniqueId]?.team != "Admin"){
+            e.isCancelled = true
         }
     }
 }

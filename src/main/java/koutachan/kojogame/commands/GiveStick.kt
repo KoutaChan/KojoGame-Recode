@@ -15,7 +15,7 @@ object GiveStick : CommandExecutor {
         args: Array<out String>?
     ): Boolean {
         if (sender is Player) {
-            sender.inventory.addItem(itemcreator(Material.STICK, 1, "§f§l鉄の棒"), itemcreator(Material.STICK, 1, "§6§l金の棒"), itemcreator(Material.STICK, 1, "§b§lダイヤの棒"))
+            sender.inventory.addItem(itemcreator(Material.STICK, 1,0, "§f§l鉄の棒"), itemcreator(Material.STICK, 1, 0,"§6§l金の棒"), itemcreator(Material.STICK, 1,0, "§b§lダイヤの棒"))
         } else {
             sender?.sendMessage("§cこのコマンドはプレイヤーからのみのコマンドです！")
         }

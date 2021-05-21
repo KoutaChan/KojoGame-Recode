@@ -25,7 +25,7 @@ object lang {
         return if(message.length in 17..32){
             listOf(message.substring(0, 16),ChatColor.getLastColors(message.substring(0, 16)) + message.substring(16))
         }else {
-            listOf(message,"")
+            listOf(message,ChatColor.getLastColors(message))
         }
     }
 }

@@ -10,7 +10,11 @@ commands:
     permission: kojogame.start
   setspawn:
     permission: kojogame.setspawn
+  team:
+    permission: kojogame.team
   kojolist:
     aliases: team-list
   ping:
     aliases: latency
+  global:
+    aliases: g

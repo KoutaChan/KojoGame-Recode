@@ -47,6 +47,8 @@ class KojoGame : JavaPlugin() {
         getCommand("setspawn").executor = SetSpawn
         getCommand("ping").executor = Ping
         getCommand("kojolist").executor = KojoList
+        getCommand("team").executor = Team
+        getCommand("global").executor = Global
         // Add config.yml
         saveDefaultConfig()
         // ???
