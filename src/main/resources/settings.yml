@@ -8,6 +8,11 @@ StartTime: 10
 GameTime: 900
 
 
+# true の場合スペースが含まれていた場合でも、そのまま発言できます（負荷が発生します）
+# false の場合スペースが含まれていた場合、それは切り取られます（負荷が発生しません）
+GlobalCommand: true
+
+
 
 
 
@@ -70,10 +75,9 @@ SCOREBOARD_LINE1: " §aメモリー > @usedmem / @maxmem MB"
 #- Team -#
 
 
-# DEFAULTは未実装
 DEFAULT_PREFIX: "§7"
 
-GLOBAL_CHAT_PREFIX: "[Global]"
+GLOBAL_CHAT_PREFIX: "§5[Global]"
 
 RED_PREFIX: "§c"
 RED_CHAT_PREFIX: "§c[赤チーム]"
@@ -86,4 +90,4 @@ ADMIN_CHAT_PREFIX: "§6[運営]"
 
 #- Config Version-#
 # これはsettings.ymlが書き換えられてしまうので、変えないでください
-ConfigVersion: 1.2
+ConfigVersion: 1.3

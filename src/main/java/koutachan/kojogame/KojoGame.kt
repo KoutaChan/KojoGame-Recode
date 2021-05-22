@@ -15,7 +15,7 @@ import kotlin.collections.HashMap
     // val
     val SettingsFile = File("plugins/KojoGame/settings.yml")
 
-    const val SettingsVersion = 1.2
+    const val SettingsVersion = 1.3
 
     val maxmem = Runtime.getRuntime().totalMemory() / 1048576
 
@@ -62,7 +62,7 @@ class KojoGame : JavaPlugin() {
         if(YamlConfiguration.loadConfiguration(SettingsFile).getDouble("ConfigVersion") != SettingsVersion){
             logger.info("${Ansi.ansi().fg(Ansi.Color.RED)}settings.ymlのバージョンが一致していないため、再生成します。${Ansi.ansi().a(Ansi.Attribute.RESET)}")
             saveResource("settings.yml",true)
-            logger.info("${Ansi.ansi().fg(Ansi.Color.GREEN)}settings.ymlの再生成に成功しました。 ${Ansi.ansi().a(Ansi.Attribute.RESET)}")
+            logger.info("${Ansi.ansi().fg(Ansi.Color.GREEN)}settings.ymlの再生成に成功しました。${Ansi.ansi().a(Ansi.Attribute.RESET)}")
             time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
         }
         // Plugin startup logic

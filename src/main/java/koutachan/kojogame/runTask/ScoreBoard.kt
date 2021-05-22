@@ -58,6 +58,14 @@ object ScoreBoard {
 
         p.displaySlot = DisplaySlot.SIDEBAR
 
+        var default = scoreboard.getTeam("S_Default")
+        if (default == null){
+            default = scoreboard.registerNewTeam("S_Default")
+        }
+        default.prefix = "${config.get("DEFAULT_PREFIX")}"
+        default.setAllowFriendlyFire(false)
+
+
         var red = scoreboard.getTeam("Red")
         if (red == null) {
             red = scoreboard.registerNewTeam("Red")
@@ -136,11 +144,7 @@ object ScoreBoard {
                         "Red" -> {player.scoreboard.getTeam("Red").addPlayer(addteam)}
                         "Blue" -> {player.scoreboard.getTeam("Blue").addPlayer(addteam)}
                         "Admin" -> {player.scoreboard.getTeam("Admin").addPlayer(addteam)}
-                        "Default" -> {
-                            player.scoreboard.getTeam("Red")?.removeEntry(addteam.name)
-                            player.scoreboard.getTeam("Blue")?.removeEntry(addteam.name)
-                            player.scoreboard.getTeam("Admin")?.removeEntry(addteam.name)
-                        }
+                        "Default" -> {player.scoreboard.getTeam("S_Default").addPlayer(addteam)}
                     }
                 }
             }

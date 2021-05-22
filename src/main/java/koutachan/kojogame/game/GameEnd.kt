@@ -26,11 +26,11 @@ object GameEnd {
                     plugin.config.getDouble("lobby.z"),
                     plugin.config.getDouble("lobby.yaw").toFloat(),
                     plugin.config.getDouble("lobby.pitch").toFloat()))
+            }
                 resetsponge()
                 SpongeIron = true
                 SpongeGold = true
                 SpongeDiamond = true
-            }
         },20 * 5)
     }
 }

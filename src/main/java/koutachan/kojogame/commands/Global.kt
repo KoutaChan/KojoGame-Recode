@@ -1,6 +1,6 @@
 package koutachan.kojogame.commands
 
-import koutachan.kojogame.langMessage.lang
+import koutachan.kojogame.langMessage.lang.config
 import koutachan.kojogame.playerdata
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
@@ -19,16 +19,24 @@ object Global : CommandExecutor {
             var teamname = ""
             when (playerdata[sender.uniqueId]?.team) {
                 "Red" -> {
-                    teamname = "${lang.config.get("RED_CHAT_PREFIX")}"
+                    teamname = "${config.get("RED_CHAT_PREFIX")}"
                 }
                 "Blue" -> {
-                    teamname = "${lang.config.get("BLUE_CHAT_PREFIX")}"
+                    teamname = "${config.get("BLUE_CHAT_PREFIX")}"
                 }
                 "Admin" -> {
-                    teamname = "${lang.config.get("ADMIN_CHAT_PREFIX")}"
+                    teamname = "${config.get("ADMIN_CHAT_PREFIX")}"
                 }
             }
-            Bukkit.broadcastMessage("§5[Global] $teamname${sender.name}: §r${args[0]}")
+            if(config.getBoolean("GlobalCommand")) {
+                val message: StringBuilder = java.lang.StringBuilder()
+                for (i in args.size downTo 1) {
+                    message.append(" " + args[args.size - i])
+                }
+                Bukkit.broadcastMessage("${config.get("GLOBAL_CHAT_PREFIX")} $teamname${sender.name}:§r$message")
+            }else {
+                Bukkit.broadcastMessage("${config.get("GLOBAL_CHAT_PREFIX")} $teamname${sender.name}: §r${args[0]}")
+            }
         }
     return true
     }

@@ -175,7 +175,7 @@ object Event : Listener {
             }
         } else {
             if (e.message.replaceFirst("!", "").isNotEmpty()) {
-                Bukkit.broadcastMessage("§5[Global] $teamname${e.player.name}: §r${e.message.replaceFirst("!", "")}")
+                Bukkit.broadcastMessage("${config.get("GLOBAL_CHAT_PREFIX")} $teamname${e.player.name}: §r${e.message.replaceFirst("!", "")}")
             } else {
                 e.player.sendMessage("§c何かを入力してください")
             }
@@ -218,7 +218,7 @@ object Event : Listener {
 
     @EventHandler
     fun PlayerDropItemEvent(e: PlayerDropItemEvent){
-        if(playerdata[e.player.uniqueId]?.team != "Admin"){
+        if(playerdata[e.player.uniqueId]?.team != "Admin" || e.player.gameMode != GameMode.CREATIVE){
             e.isCancelled = true
         }
     }
