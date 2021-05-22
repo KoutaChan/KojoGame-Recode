@@ -2,6 +2,7 @@ package koutachan.kojogame.commands
 
 import koutachan.kojogame.playerdata
 import net.md_5.bungee.api.ChatColor
+import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -20,10 +21,16 @@ object Team : CommandExecutor{
                 playerdata[sender.uniqueId]?.team = team
                 sender.sendMessage("${ChatColor.AQUA}あなたのチームは $team に設定されました")
             }else {
-                sender.sendMessage("${ChatColor.RED}使い方が間違っています！ /team [admin / red / blue / default]")
+                if(args[0].equals("w",ignoreCase = true)) {
+                    for(i in Bukkit.getOnlinePlayers()){
+
+                    }
+                }else{
+                    sender.sendMessage("${ChatColor.RED}使い方が間違っています！ /team [admin / red / blue / default] OR /team w (チーム割り振り)")
+                }
             }
         }else {
-            sender?.sendMessage("${ChatColor.RED}実行者がプレイヤーではないか、使い方が間違っています！ /team [admin / red / blue / default]")
+            sender?.sendMessage("${ChatColor.RED}実行者がプレイヤーではないか、使い方が間違っています！ /team [admin / red / blue / default] OR /team w (チーム割り振り)")
         }
     return true
     }

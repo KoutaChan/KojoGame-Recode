@@ -31,7 +31,7 @@ import org.bukkit.potion.PotionEffectType
 
 object Event : Listener {
     @EventHandler
-    fun PlayerJoinEvent(e: PlayerJoinEvent) {
+    fun onPlayerJoinEvent(e: PlayerJoinEvent) {
         e.joinMessage = ""
         scoreboard(e.player)
     }
@@ -40,7 +40,7 @@ object Event : Listener {
     //メモ(赤) : 守り
 
     @EventHandler
-    fun BlockBreakEvent(e: BlockBreakEvent) {
+    fun onBlockBreakEvent(e: BlockBreakEvent) {
         if (e.player.gameMode != GameMode.CREATIVE) {
             if (e.block.type != Material.SPONGE) {
                 e.isCancelled = true
@@ -80,14 +80,14 @@ object Event : Listener {
     }
 
     @EventHandler
-    fun BlockPlaceEvent(e: BlockPlaceEvent) {
+    fun onBlockPlaceEvent(e: BlockPlaceEvent) {
         if (e.player.gameMode != GameMode.CREATIVE) {
             e.isCancelled = true
         }
     }
 
     @EventHandler
-    fun PlayerInteractEvent(e: PlayerInteractEvent) {
+    fun onPlayerInteractEvent(e: PlayerInteractEvent) {
         if (GameState == LOBBY && e.player.isOp && e.action == Action.RIGHT_CLICK_BLOCK && e.player.inventory.itemInMainHand.type == Material.STICK) {
             when (e.player.inventory.itemInMainHand.itemMeta.displayName) {
                 "§f§l鉄の棒" -> {
@@ -122,7 +122,7 @@ object Event : Listener {
     }
 
     @EventHandler
-    fun PlayerDeathEvent(e: PlayerDeathEvent) {
+    fun onPlayerDeathEvent(e: PlayerDeathEvent) {
         Bukkit.getScheduler().runTaskLater(plugin, {
             when (playerdata[e.entity.player.uniqueId]?.team) {
                 "Red" -> {
@@ -155,7 +155,7 @@ object Event : Listener {
     }
 
     @EventHandler
-    fun AsyncPlayerChatEvent(e: AsyncPlayerChatEvent) {
+    fun onAsyncPlayerChatEvent(e: AsyncPlayerChatEvent) {
         var teamname = ""
         when (playerdata[e.player.uniqueId]?.team) {
             "Red" -> {
@@ -179,13 +179,13 @@ object Event : Listener {
             if (e.message.replaceFirst("!", "").isNotEmpty()) {
                 Bukkit.broadcastMessage("${config.get("GLOBAL_CHAT_PREFIX")} $teamname${e.player.name}: §r${e.message.replaceFirst("!", "")}")
             } else {
-                e.player.sendMessage("§c何かを入力してください")
+                e.player.sendMessage("${ChatColor.RED}何かを入力してください")
             }
         }
     }
 
     @EventHandler
-    fun EntityDamageEvent(e: EntityDamageEvent) {
+    fun onEntityDamageEvent(e: EntityDamageEvent) {
         if(e.entity is Player){
             if(GameState != PLAYING || playerdata[e.entity.uniqueId]?.team == "Default"){
                 e.isCancelled = true
@@ -194,12 +194,12 @@ object Event : Listener {
     }
 
     @EventHandler
-    fun PlayerInteractEntityEvent(e: PlayerInteractEntityEvent){
+    fun onPlayerInteractEntityEvent(e: PlayerInteractEntityEvent){
         if(e.rightClicked is Villager) {
             e.isCancelled = true
             val inv = Bukkit.createInventory(null,27,"${ChatColor.GREEN}ショップ")
             for(i in 0..26){
-                inv.setItem(i, itemcreator(Material.STAINED_GLASS_PANE,1,10,"§a"))
+                inv.setItem(i, itemcreator(Material.STAINED_GLASS_PANE,1,10,"${ChatColor.GREEN}"))
             }
 
             val potion = itemcreator(Material.POTION,1,0,"${ChatColor.AQUA}ポーション ${ChatColor.GOLD}(スポンジ 1個)")
@@ -223,14 +223,14 @@ object Event : Listener {
     }
 
     @EventHandler
-    fun PlayerDropItemEvent(e: PlayerDropItemEvent){
+    fun onPlayerDropItemEvent(e: PlayerDropItemEvent){
         if(playerdata[e.player.uniqueId]?.team != "Admin" || e.player.gameMode != GameMode.CREATIVE){
             e.isCancelled = true
         }
     }
 
     @EventHandler
-    fun InventoryClickEvent(e: InventoryClickEvent){
+    fun onInventoryClickEvent(e: InventoryClickEvent){
         if(e.inventory.name == "${ChatColor.GREEN}ショップ") {
             e.isCancelled = true
 
@@ -249,9 +249,19 @@ object Event : Listener {
     }
 
     @EventHandler
-    fun InventoryDragEvent(e: InventoryDragEvent){
+    fun onInventoryDragEvent(e: InventoryDragEvent){
         if(e.inventory.name == "${ChatColor.GREEN}ショップ"){
             e.isCancelled = true
+        }
+    }
+
+    @EventHandler
+    fun onPlayerItemConsumeEvent(e: PlayerItemConsumeEvent){
+        Bukkit.broadcastMessage("a")
+        if(e.item.type == Material.POTION){
+            Bukkit.getScheduler().runTaskLater(plugin, {
+                e.player.inventory.remove(Material.GLASS_BOTTLE)
+            },1)
         }
     }
 }

@@ -8,7 +8,7 @@ import koutachan.kojogame.time
 import org.bukkit.scheduler.BukkitRunnable
 
 object Timer {
-    fun Timer() {
+    fun timer() {
         object : BukkitRunnable() {
             override fun run() {
                 if (GameState != PLAYING){

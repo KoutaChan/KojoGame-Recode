@@ -30,8 +30,8 @@ object Global : CommandExecutor {
             }
             if(config.getBoolean("GlobalCommand")) {
                 val message: StringBuilder = java.lang.StringBuilder()
-                for (i in args.size downTo 1) {
-                    message.append(" " + args[args.size - i])
+                for(i in args.toList()){
+                    message.append(" $i")
                 }
                 Bukkit.broadcastMessage("${config.get("GLOBAL_CHAT_PREFIX")} $teamname${sender.name}:§r$message")
             }else {
