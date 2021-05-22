@@ -115,7 +115,6 @@ object ScoreBoard {
                 val line10 = lang.LengthCheck(config.getString("SCOREBOARD_LINE10").replace("@state", GameState.toString().replace("LOBBY","${config.get("GAMESTATE_LOBBY")}").replace("STARTING","${config.get("GAMESTATE_STARTING")}").replace("PLAYING","${config.get("GAMESTATE_PLAYING")}").replace("ENDING","${config.get("GAMESTATE_ENDING")}")).replace("@start","$starttime").replace("@time","$time").replace("@randomint","${Random.nextInt(100000)}").replace("@playername",player.name).replace("@usedmem","${(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1048576}").replace("@maxmem", "$maxmem").replace("@irons","$SpongeIron".replace("true","${config.get("SCOREBOARD_IRON_TRUE")}").replace("false","${config.get("SCOREBOARD_IRON_FALSE")}")).replace("@golds","$SpongeGold".replace("true","${config.get("SCOREBOARD_IRON_TRUE")}").replace("false","${config.get("SCOREBOARD_GOLD_FALSE")}")).replace("@diamonds","$SpongeDiamond".replace("true","${config.get("SCOREBOARD_DIAMOND_TRUE")}").replace("false","${config.get("SCOREBOARD_DIAMOND_FALSE")}")))
 
 
-                //lang.LengthCheck()
                 player.scoreboard.getTeam("line1").prefix = line1[0]
                 player.scoreboard.getTeam("line2").prefix = line2[0]
                 player.scoreboard.getTeam("line3").prefix = line3[0]

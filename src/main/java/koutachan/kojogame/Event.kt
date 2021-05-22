@@ -22,6 +22,8 @@ import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
+import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryDragEvent
 import org.bukkit.event.player.*
 import org.bukkit.inventory.meta.PotionMeta
 import org.bukkit.potion.PotionEffect
@@ -196,6 +198,10 @@ object Event : Listener {
         if(e.rightClicked is Villager) {
             e.isCancelled = true
             val inv = Bukkit.createInventory(null,27,"${ChatColor.GREEN}ショップ")
+            for(i in 0..26){
+                inv.setItem(i, itemcreator(Material.STAINED_GLASS_PANE,1,10,"§a"))
+            }
+
             val potion = itemcreator(Material.POTION,1,0,"${ChatColor.AQUA}ポーション ${ChatColor.GOLD}(スポンジ 1個)")
             val potionMeta = (potion.itemMeta as PotionMeta)
             potionMeta.addCustomEffect(PotionEffect(PotionEffectType.SPEED,20 * 60,1),true)
@@ -219,6 +225,32 @@ object Event : Listener {
     @EventHandler
     fun PlayerDropItemEvent(e: PlayerDropItemEvent){
         if(playerdata[e.player.uniqueId]?.team != "Admin" || e.player.gameMode != GameMode.CREATIVE){
+            e.isCancelled = true
+        }
+    }
+
+    @EventHandler
+    fun InventoryClickEvent(e: InventoryClickEvent){
+        if(e.inventory.name == "${ChatColor.GREEN}ショップ") {
+            e.isCancelled = true
+
+            if (e.currentItem != null && e.currentItem.type != Material.AIR && e.currentItem.itemMeta.displayName != null) {
+                if (e.currentItem.itemMeta.displayName.contains("スポンジ 1個")) {
+                    for (inv in e.whoClicked.inventory.contents) {
+                        if (inv != null && inv.type == Material.SPONGE) {
+                            inv.amount = inv.amount - 1
+                            e.whoClicked.inventory.addItem(e.currentItem)
+                            e.whoClicked.sendMessage("${ChatColor.GREEN}${e.currentItem.itemMeta.displayName}${ChatColor.GREEN}を買った")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    fun InventoryDragEvent(e: InventoryDragEvent){
+        if(e.inventory.name == "${ChatColor.GREEN}ショップ"){
             e.isCancelled = true
         }
     }
