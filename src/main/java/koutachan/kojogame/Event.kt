@@ -4,6 +4,7 @@ import koutachan.kojogame.KojoGame.Companion.plugin
 import koutachan.kojogame.game.GameEnd.gameend
 import koutachan.kojogame.game.GameState.LOBBY
 import koutachan.kojogame.game.GameState.PLAYING
+import koutachan.kojogame.langMessage.lang
 import koutachan.kojogame.langMessage.lang.config
 import koutachan.kojogame.runTask.ScoreBoard.scoreboard
 import koutachan.kojogame.util.ItemCreator.itemcreator
@@ -177,7 +178,7 @@ object Event : Listener {
             }
         } else {
             if (e.message.replaceFirst("!", "").isNotEmpty()) {
-                Bukkit.broadcastMessage("${config.get("GLOBAL_CHAT_PREFIX")} $teamname${e.player.name}: §r${e.message.replaceFirst("!", "")}")
+                Bukkit.broadcastMessage("${lang.GLOBAL_CHAT_PREFIX} $teamname${e.player.name}: §r${e.message.replaceFirst("!", "")}")
             } else {
                 e.player.sendMessage("${ChatColor.RED}何かを入力してください")
             }
@@ -257,7 +258,6 @@ object Event : Listener {
 
     @EventHandler
     fun onPlayerItemConsumeEvent(e: PlayerItemConsumeEvent){
-        Bukkit.broadcastMessage("a")
         if(e.item.type == Material.POTION){
             Bukkit.getScheduler().runTaskLater(plugin, {
                 e.player.inventory.remove(Material.GLASS_BOTTLE)

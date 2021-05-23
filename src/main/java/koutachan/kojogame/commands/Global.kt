@@ -1,5 +1,6 @@
 package koutachan.kojogame.commands
 
+import koutachan.kojogame.langMessage.lang
 import koutachan.kojogame.langMessage.lang.config
 import koutachan.kojogame.playerdata
 import org.bukkit.Bukkit
@@ -7,6 +8,8 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+
+val Command = config.getBoolean("GlobalCommand")
 
 object Global : CommandExecutor {
     override fun onCommand(
@@ -28,14 +31,14 @@ object Global : CommandExecutor {
                     teamname = "${config.get("ADMIN_CHAT_PREFIX")}"
                 }
             }
-            if(config.getBoolean("GlobalCommand")) {
+            if(Command) {
                 val message: StringBuilder = java.lang.StringBuilder()
-                for(i in args.toList()){
-                    message.append(" $i")
+                args.forEach{ i ->
+                    message.append("$i ")
                 }
-                Bukkit.broadcastMessage("${config.get("GLOBAL_CHAT_PREFIX")} $teamname${sender.name}:§r$message")
+                Bukkit.broadcastMessage("${lang.GLOBAL_CHAT_PREFIX} $teamname${sender.name}: §r$message")
             }else {
-                Bukkit.broadcastMessage("${config.get("GLOBAL_CHAT_PREFIX")} $teamname${sender.name}: §r${args[0]}")
+                Bukkit.broadcastMessage("${lang.GLOBAL_CHAT_PREFIX} $teamname${sender.name}: §r${args[0]}")
             }
         }
     return true

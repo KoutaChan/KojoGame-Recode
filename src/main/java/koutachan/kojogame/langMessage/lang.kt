@@ -10,18 +10,21 @@ object lang {
 
     //CURRENT REPLACE .replace("@start","$starttime").replace("@time","$time").replace("@state", GameState.toString())
 
-    val MESSAGE_STARTING_COUNT = config.get("STARTING_COUNT").toString()
-    val TITLE_STARTING_COUNT = config.get("STARTING_TITLE").toString()
+    val MESSAGE_STARTING_COUNT: String = config.getString("STARTING_COUNT")
+    val TITLE_STARTING_COUNT: String = config.getString("STARTING_TITLE")
 
-    val MESSAGE_START = config.get("START_CHAT").toString()
-    val TITLE_START = config.get("START_TITLE").toString()
+    val MESSAGE_START: String = config.getString("START_CHAT")
+    val TITLE_START: String = config.getString("START_TITLE")
 
-    val MESSAGE_TELEPORT_TO_LOBBY5 = config.get("TELEPORT_TO_LOBBY5").toString()
-    val MESSAGE_TELEPORT_TO_LOBBY = config.get("TELEPORT_TO_LOBBY").toString()
+    val MESSAGE_TELEPORT_TO_LOBBY5: String = config.getString("TELEPORT_TO_LOBBY5")
+    val MESSAGE_TELEPORT_TO_LOBBY: String = config.getString("TELEPORT_TO_LOBBY")
 
-    val TITLE_SCOREBOARD = config.get("SCOREBOARD_TITLE").toString()
+    val TITLE_SCOREBOARD: String = config.getString("SCOREBOARD_TITLE")
 
-    fun LengthCheck(message: String): List<String> {
+    val GLOBAL_CHAT_PREFIX: String = config.getString("GLOBAL_CHAT_PREFIX")
+
+
+    fun lengthcheck(message: String): List<String> {
         return if(message.length in 17..32){
             listOf(message.substring(0, 16),ChatColor.getLastColors(message.substring(0, 16)) + message.substring(16))
         }else {
