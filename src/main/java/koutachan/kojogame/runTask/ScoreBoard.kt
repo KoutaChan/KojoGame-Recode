@@ -15,6 +15,7 @@ object ScoreBoard {
         val scoreboard = Bukkit.getScoreboardManager().newScoreboard
         val p = scoreboard.registerNewObjective("KojoGame", "dummy")
 
+
         p.getScore("§９").score = 10
         p.getScore("§８").score = 9
         p.getScore("§７").score = 8
