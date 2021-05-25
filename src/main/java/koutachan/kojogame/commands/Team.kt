@@ -1,6 +1,5 @@
 package koutachan.kojogame.commands
 
-import koutachan.kojogame.KojoGame.Companion.plugin
 import koutachan.kojogame.playerdata
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.Bukkit
@@ -23,32 +22,46 @@ object Team : CommandExecutor{
                 sender.sendMessage("${ChatColor.AQUA}あなたのチームは $team に設定されました")
             }else {
                 if(args[0].equals("w",ignoreCase = true)) {
-                    var red = 0
-                    var blue = 0
-                    for(i in Bukkit.getOnlinePlayers()){
-                        when(playerdata[i.uniqueId]?.team){
-                            "Red" -> { red++}
-                            "Blue" -> { blue++}
-                        }
-                        Bukkit.getScheduler().runTaskLater(plugin, {
-                            if (playerdata[i.uniqueId]?.team == "Default") {
-                                if (red <= blue) {
-                                    playerdata[i.uniqueId]?.team = "Red"
-                                    red++
-                                } else {
+                    for(i in Bukkit.getOnlinePlayers()) {
+                        if (playerdata[i.uniqueId]?.team == "Default") {
+                            if (sender.scoreboard.getTeam("Red").size == sender.scoreboard.getTeam("Blue").size) {
+                                when ((1..10).random()) {
+                                    in 1..5 -> {
+                                        sender.scoreboard.getTeam("Red").addEntry(i.name) //hashmapだと入るまでに時間がかかるから即座に入れる
+                                        playerdata[i.uniqueId]?.team = "Red"
+                                    }
+                                    in 6..10 -> {
+                                        sender.scoreboard.getTeam("Blue").addEntry(i.name)
+                                        playerdata[i.uniqueId]?.team = "Blue"
+                                    }
+                                }
+                            } else {
+                                if (sender.scoreboard.getTeam("Blue").size < sender.scoreboard.getTeam("Red").size) {
+                                    sender.scoreboard.getTeam("Blue").addEntry(i.name)
                                     playerdata[i.uniqueId]?.team = "Blue"
-                                    blue++
+                                } else {
+                                    sender.scoreboard.getTeam("Red").addEntry(i.name)
+                                    playerdata[i.uniqueId]?.team = "Red"
                                 }
                             }
-                        },1)
+                        }
                     }
-                    sender.sendMessage("${ChatColor.GOLD}Result: ${ChatColor.RED}$red ${ChatColor.GOLD}|| ${ChatColor.BLUE}$blue")
+                    sender.sendMessage("${ChatColor.GOLD}チームの割り振りが完了しました")
                 }else{
-                    sender.sendMessage("${ChatColor.RED}使い方が間違っています！ /team [admin / red / blue / default] OR /team w (チーム割り振り)")
+                    if(args[0].equals("leave",ignoreCase = true) || args[0].equals("l",ignoreCase = true)){
+                        for(i in Bukkit.getOnlinePlayers()){
+                            if(playerdata[i.uniqueId]?.team != "Admin"){
+                                playerdata[i.uniqueId]?.team = "Default"
+                            }
+                            sender.sendMessage("${ChatColor.GRAY}チームを解散させました")
+                        }
+                    }else {
+                        sender.sendMessage("${ChatColor.RED}使い方が間違っています！ /team [admin / red / blue / default] OR /team [w (チーム割り振り) / leave (チーム解散)]")
+                    }
                 }
             }
         }else {
-            sender?.sendMessage("${ChatColor.RED}実行者がプレイヤーではないか、使い方が間違っています！ /team [admin / red / blue / default] OR /team w (チーム割り振り)")
+            sender?.sendMessage("${ChatColor.RED}実行者がプレイヤーではないか、使い方が間違っています！ /team [admin / red / blue / default] OR /team [w (チーム割り振り) / leave (チーム解散)]")
         }
     return true
     }

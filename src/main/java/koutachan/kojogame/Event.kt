@@ -37,6 +37,23 @@ object Event : Listener {
         scoreboard(e.player)
     }
 
+    @EventHandler
+    fun onPlayerLeaveEvent(e: PlayerQuitEvent) {
+        e.quitMessage = ""
+        when(playerdata[e.player.uniqueId]?.team){
+            "Red" -> {
+                for(i in Bukkit.getOnlinePlayers()){
+                    i.scoreboard.getTeam("Red").removeEntry(e.player.name)
+                }
+            }
+            "Blue" -> {
+                for(i in Bukkit.getOnlinePlayers()){
+                    i.scoreboard.getTeam("Blue").removeEntry(e.player.name)
+                }
+            }
+        }
+    }
+
     //メモ(青) : 攻め
     //メモ(赤) : 守り
 
