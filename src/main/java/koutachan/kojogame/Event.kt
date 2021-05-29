@@ -38,7 +38,7 @@ object Event : Listener {
     }
 
     @EventHandler
-    fun onPlayerLeaveEvent(e: PlayerQuitEvent) {
+    fun onPlayerQuitEvent(e: PlayerQuitEvent) {
         e.quitMessage = ""
         when(playerdata[e.player.uniqueId]?.team){
             "Red" -> {

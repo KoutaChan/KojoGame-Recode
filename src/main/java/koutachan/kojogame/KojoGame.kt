@@ -10,12 +10,11 @@ import org.bukkit.plugin.java.JavaPlugin
 import org.fusesource.jansi.Ansi
 import java.io.File
 import java.util.*
-import kotlin.collections.HashMap
 
     // val
     val SettingsFile = File("plugins/KojoGame/settings.yml")
 
-    const val SettingsVersion = 1.3
+    private const val SettingsVersion = 1.3
 
     val maxmem = Runtime.getRuntime().totalMemory() / 1048576
 
@@ -49,6 +48,8 @@ class KojoGame : JavaPlugin() {
         getCommand("kojolist").executor = KojoList
         getCommand("team").executor = Team
         getCommand("global").executor = Global
+        getCommand("setspawn").tabCompleter = TabComplete
+        getCommand("team").tabCompleter = TabComplete
         // Add config.yml
         saveDefaultConfig()
         // ???

@@ -13,8 +13,11 @@ commands:
   team:
     permission: kojogame.team
   kojolist:
+    usage: View teamlist
     aliases: team-list
   ping:
+    usage: View Your Ping
     aliases: latency
   global:
+    usage: Global Chat
     aliases: g
