@@ -14,6 +14,7 @@ import net.md_5.bungee.api.chat.TextComponent
 import net.minecraft.server.v1_12_R1.PacketPlayInClientCommand
 import org.bukkit.*
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.entity.Villager
 import org.bukkit.event.EventHandler
@@ -228,9 +229,16 @@ object Event : Listener {
             potionMeta.color = Color.AQUA
             potion.itemMeta = potionMeta
 
+            val shield = itemcreator(Material.SHIELD,1,0,"${ChatColor.GRAY}シールド ${ChatColor.GOLD}(スポンジ 1個)","${ChatColor.GRAY}一般的なシールド","${ChatColor.GRAY}特に効果などはない")
+            val shieldMeta = shield.itemMeta
+            shieldMeta.isUnbreakable = true
+            shieldMeta.addEnchant(Enchantment.KNOCKBACK,2,true)
+            shield.itemMeta = shieldMeta
+
             inv.setItem(0, itemcreator(Material.STAINED_GLASS_PANE,1, 5,"${ChatColor.GREEN}ポーション類"))
             inv.setItem(1, potion)
             inv.setItem(9, itemcreator(Material.STAINED_GLASS_PANE,1,14,"${ChatColor.RED}剣/防御"))
+            inv.setItem(10, shield)
             inv.setItem(18, itemcreator(Material.STAINED_GLASS_PANE,1,4,"${ChatColor.YELLOW}その他"))
             //inv.setItem(0, itemcreator(Material.POTION,1,"${ChatColor.AQUA}ポーション","${ChatColor.GREEN}ポーション効果:","${ChatColor.AQUA}スピード2(1分)","${ChatColor.RED}攻撃力上昇2(2分)","${ChatColor.LIGHT_PURPLE}再生2(5分)","","${ChatColor.GOLD}これを買うにはスポンジが1個必要"))
             //inv.setItem(2, itemcreator(Material.STICK,64,0,"今日はいい天気だ！","lore1","lore2"))
@@ -259,6 +267,7 @@ object Event : Listener {
                             inv.amount = inv.amount - 1
                             e.whoClicked.inventory.addItem(e.currentItem)
                             e.whoClicked.sendMessage("${ChatColor.GREEN}${e.currentItem.itemMeta.displayName}${ChatColor.GREEN}を買った")
+                            break
                         }
                     }
                 }
