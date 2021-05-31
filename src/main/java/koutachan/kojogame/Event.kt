@@ -41,14 +41,14 @@ object Event : Listener {
     @EventHandler
     fun onPlayerQuitEvent(e: PlayerQuitEvent) {
         e.quitMessage = ""
-        when(playerdata[e.player.uniqueId]?.team){
+        when (playerdata[e.player.uniqueId]?.team) {
             "Red" -> {
-                for(i in Bukkit.getOnlinePlayers()){
+                for (i in Bukkit.getOnlinePlayers()) {
                     i.scoreboard.getTeam("Red").removeEntry(e.player.name)
                 }
             }
             "Blue" -> {
-                for(i in Bukkit.getOnlinePlayers()){
+                for (i in Bukkit.getOnlinePlayers()) {
                     i.scoreboard.getTeam("Blue").removeEntry(e.player.name)
                 }
             }
@@ -170,7 +170,7 @@ object Event : Listener {
                 }
             }
             (e.entity.player as CraftPlayer).handle.playerConnection.a(PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN))
-        },2)
+        }, 2)
     }
 
     @EventHandler
@@ -196,7 +196,10 @@ object Event : Listener {
             }
         } else {
             if (e.message.replaceFirst("!", "").isNotEmpty()) {
-                Bukkit.broadcastMessage("${lang.GLOBAL_CHAT_PREFIX} $teamname${e.player.name}: §r${e.message.replaceFirst("!", "")}")
+                Bukkit.broadcastMessage("${lang.GLOBAL_CHAT_PREFIX} $teamname${e.player.name}: §r${
+                    e.message.replaceFirst("!",
+                        "")
+                }")
             } else {
                 e.player.sendMessage("${ChatColor.RED}何かを入力してください")
             }
@@ -205,27 +208,27 @@ object Event : Listener {
 
     @EventHandler
     fun onEntityDamageEvent(e: EntityDamageEvent) {
-        if(e.entity is Player){
-            if(GameState != PLAYING || playerdata[e.entity.uniqueId]?.team == "Default"){
+        if (e.entity is Player) {
+            if (GameState != PLAYING || playerdata[e.entity.uniqueId]?.team == "Default") {
                 e.isCancelled = true
             }
         }
     }
 
     @EventHandler
-    fun onPlayerInteractEntityEvent(e: PlayerInteractEntityEvent){
-        if(e.rightClicked is Villager) {
+    fun onPlayerInteractEntityEvent(e: PlayerInteractEntityEvent) {
+        if (e.rightClicked is Villager) {
             e.isCancelled = true
-            val inv = Bukkit.createInventory(null,27,"${ChatColor.GREEN}ショップ")
-            for(i in 0..26){
-                inv.setItem(i, itemcreator(Material.STAINED_GLASS_PANE,1,10,"${ChatColor.GREEN}"))
+            val inv = Bukkit.createInventory(null, 27, "${ChatColor.GREEN}ショップ")
+            for (i in 0..26) {
+                inv.setItem(i, itemcreator(Material.STAINED_GLASS_PANE, 1, 10, "${ChatColor.GREEN}"))
             }
 
-            val potion = itemcreator(Material.POTION,1,0,"${ChatColor.AQUA}ポーション ${ChatColor.GOLD}(スポンジ 1個)")
+            val potion = itemcreator(Material.POTION, 1, 0, "${ChatColor.AQUA}ポーション ${ChatColor.GOLD}(スポンジ 1個)")
             val potionMeta = (potion.itemMeta as PotionMeta)
-            potionMeta.addCustomEffect(PotionEffect(PotionEffectType.SPEED,20 * 60,1),true)
-            potionMeta.addCustomEffect(PotionEffect(PotionEffectType.INCREASE_DAMAGE,20 * 60 * 2,1),true)
-            potionMeta.addCustomEffect(PotionEffect(PotionEffectType.REGENERATION,20 * 60 * 5,1),true)
+            potionMeta.addCustomEffect(PotionEffect(PotionEffectType.SPEED, 20 * 60, 1), true)
+            potionMeta.addCustomEffect(PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20 * 60 * 2, 1), true)
+            potionMeta.addCustomEffect(PotionEffect(PotionEffectType.REGENERATION, 20 * 60 * 5, 1), true)
             potionMeta.color = Color.AQUA
             potion.itemMeta = potionMeta
 
@@ -235,33 +238,40 @@ object Event : Listener {
             shieldMeta.addEnchant(Enchantment.KNOCKBACK,2,true)
             shield.itemMeta = shieldMeta
 
-            inv.setItem(0, itemcreator(Material.STAINED_GLASS_PANE,1, 5,"${ChatColor.GREEN}ポーション類"))
+            inv.setItem(0, itemcreator(Material.STAINED_GLASS_PANE, 1, 5, "${ChatColor.GREEN}ポーション類"))
             inv.setItem(1, potion)
-            inv.setItem(9, itemcreator(Material.STAINED_GLASS_PANE,1,14,"${ChatColor.RED}剣/防御"))
+            inv.setItem(9, itemcreator(Material.STAINED_GLASS_PANE, 1, 14, "${ChatColor.RED}剣/防御"))
             inv.setItem(10, shield)
-            inv.setItem(18, itemcreator(Material.STAINED_GLASS_PANE,1,4,"${ChatColor.YELLOW}その他"))
+            inv.setItem(18, itemcreator(Material.STAINED_GLASS_PANE, 1, 4, "${ChatColor.YELLOW}その他"))
             //inv.setItem(0, itemcreator(Material.POTION,1,"${ChatColor.AQUA}ポーション","${ChatColor.GREEN}ポーション効果:","${ChatColor.AQUA}スピード2(1分)","${ChatColor.RED}攻撃力上昇2(2分)","${ChatColor.LIGHT_PURPLE}再生2(5分)","","${ChatColor.GOLD}これを買うにはスポンジが1個必要"))
             //inv.setItem(2, itemcreator(Material.STICK,64,0,"今日はいい天気だ！","lore1","lore2"))
             e.player.openInventory(inv)
-            e.player.inventory.addItem(itemcreator(Material.ICE,1,1,"ああ","1","2","3"))
+            e.player.inventory.addItem(itemcreator(Material.ICE, 1, 1, "ああ", "1", "2", "3"))
             Bukkit.broadcastMessage("h")
         }
     }
 
     @EventHandler
-    fun onPlayerDropItemEvent(e: PlayerDropItemEvent){
-        if(playerdata[e.player.uniqueId]?.team != "Admin" || e.player.gameMode != GameMode.CREATIVE){
-            e.isCancelled = true
+    fun onPlayerDropItemEvent(e: PlayerDropItemEvent) {
+        if (playerdata[e.player.uniqueId]?.team.equals("Admin") || e.player.gameMode == GameMode.CREATIVE) {
+            return
         }
+        e.isCancelled = true
     }
 
     @EventHandler
-    fun onInventoryClickEvent(e: InventoryClickEvent){
-        if(e.inventory.name == "${ChatColor.GREEN}ショップ") {
+    fun onInventoryClickEvent(e: InventoryClickEvent) {
+        if (e.inventory.name == "${ChatColor.GREEN}ショップ") {
             e.isCancelled = true
 
             if (e.currentItem != null && e.currentItem.type != Material.AIR && e.currentItem.itemMeta.displayName != null) {
                 if (e.currentItem.itemMeta.displayName.contains("スポンジ 1個")) {
+                    if(e.whoClicked.inventory.firstEmpty() == -1){
+                        (e.whoClicked as Player).playSound(e.whoClicked.location,Sound.BLOCK_NOTE_BASS,1F,1F)
+                        e.whoClicked.sendMessage("${ChatColor.RED}[ショップ] インベントリーを開けてから買ってね！")
+                        return
+                    }
+                    Bukkit.broadcastMessage((e.whoClicked.inventory.firstEmpty() == -1).toString())
                     for (inv in e.whoClicked.inventory.contents) {
                         if (inv != null && inv.type == Material.SPONGE) {
                             inv.amount = inv.amount - 1
@@ -276,18 +286,18 @@ object Event : Listener {
     }
 
     @EventHandler
-    fun onInventoryDragEvent(e: InventoryDragEvent){
-        if(e.inventory.name == "${ChatColor.GREEN}ショップ"){
+    fun onInventoryDragEvent(e: InventoryDragEvent) {
+        if (e.inventory.name == "${ChatColor.GREEN}ショップ") {
             e.isCancelled = true
         }
     }
 
     @EventHandler
-    fun onPlayerItemConsumeEvent(e: PlayerItemConsumeEvent){
-        if(e.item.type == Material.POTION){
+    fun onPlayerItemConsumeEvent(e: PlayerItemConsumeEvent) {
+        if (e.item.type == Material.POTION) {
             Bukkit.getScheduler().runTaskLater(plugin, {
                 e.player.inventory.remove(Material.GLASS_BOTTLE)
-            },1)
+            }, 1)
         }
     }
 }

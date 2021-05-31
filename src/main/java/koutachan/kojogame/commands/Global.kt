@@ -9,7 +9,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-val Command = config.getBoolean("GlobalCommand")
+private val Command = config.getBoolean("GlobalCommand")
 
 object Global : CommandExecutor {
     override fun onCommand(

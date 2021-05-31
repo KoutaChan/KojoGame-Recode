@@ -5,6 +5,7 @@ import koutachan.kojogame.commands.*
 import koutachan.kojogame.game.GameState.LOBBY
 import koutachan.kojogame.game.ResetSponge.resetsponge
 import koutachan.kojogame.runTask.ScoreBoard.scoreboardupdate
+import org.bukkit.Bukkit
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
 import org.fusesource.jansi.Ansi
@@ -58,15 +59,23 @@ class KojoGame : JavaPlugin() {
         // Custom Config
         if(!SettingsFile.exists()) {
             saveResource("settings.yml", false)
-            time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
         }
-        if(YamlConfiguration.loadConfiguration(SettingsFile).getDouble("ConfigVersion") != SettingsVersion){
+
+        if(YamlConfiguration.loadConfiguration(SettingsFile).getDouble("ConfigVersion") != SettingsVersion) {
             logger.info("${Ansi.ansi().fg(Ansi.Color.RED)}settings.ymlのバージョンが一致していないため、再生成します。${Ansi.ansi().a(Ansi.Attribute.RESET)}")
-            saveResource("settings.yml",true)
-            logger.info("${Ansi.ansi().fg(Ansi.Color.GREEN)}settings.ymlの再生成に成功しました。${Ansi.ansi().a(Ansi.Attribute.RESET)}")
+            kotlin.runCatching {
+                saveResource("settings.yml", true)
+            }.fold(
+                onSuccess = {
+                    logger.info("${Ansi.ansi().fg(Ansi.Color.GREEN)}settings.ymlの再生成に成功しました。${Ansi.ansi().a(Ansi.Attribute.RESET)}") },
+                onFailure = {
+                    it.printStackTrace()
+                    logger.info("${Ansi.ansi().fg(Ansi.Color.RED)}エラーが発生しました${Ansi.ansi().a(Ansi.Attribute.RESET)}")
+                }
+            )
             time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
+            // Plugin startup logic
         }
-        // Plugin startup logic
     }
 
     override fun onDisable() {

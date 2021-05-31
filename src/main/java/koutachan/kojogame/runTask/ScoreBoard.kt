@@ -59,32 +59,19 @@ object ScoreBoard {
 
         p.displaySlot = DisplaySlot.SIDEBAR
 
-        var default = scoreboard.getTeam("S_Default")
-        if (default == null){
-            default = scoreboard.registerNewTeam("S_Default")
-        }
+        val default = scoreboard.getTeam("S_Default") ?: scoreboard.registerNewTeam("S_Default")
         default.prefix = "${config.get("DEFAULT_PREFIX")}"
         default.setAllowFriendlyFire(false)
 
-
-        var red = scoreboard.getTeam("Red")
-        if (red == null) {
-            red = scoreboard.registerNewTeam("Red")
-        }
+        val red = scoreboard.getTeam("Red") ?: scoreboard.registerNewTeam("Red")
         red.prefix = "${config.get("RED_PREFIX")}"
         red.setAllowFriendlyFire(false)
 
-        var blue = scoreboard.getTeam("Blue")
-        if (blue == null) {
-            blue = scoreboard.registerNewTeam("Blue")
-        }
+        val blue = scoreboard.getTeam("Blue") ?: scoreboard.registerNewTeam("Blue")
         blue.prefix = "${config.get("BLUE_PREFIX")}"
         blue.setAllowFriendlyFire(false)
 
-        var admin = scoreboard.getTeam("Admin")
-        if (admin == null) {
-            admin = scoreboard.registerNewTeam("Admin")
-        }
+        val admin = scoreboard.getTeam("Admin") ?: scoreboard.registerNewTeam("Admin")
         admin.prefix = "${config.get("ADMIN_PREFIX")}"
         admin.setAllowFriendlyFire(false)
 
