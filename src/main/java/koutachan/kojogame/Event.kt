@@ -5,9 +5,9 @@ import koutachan.kojogame.game.GameEnd.gameend
 import koutachan.kojogame.game.GameState.LOBBY
 import koutachan.kojogame.game.GameState.PLAYING
 import koutachan.kojogame.langMessage.lang
-import koutachan.kojogame.langMessage.lang.config
 import koutachan.kojogame.runTask.ScoreBoard.scoreboard
 import koutachan.kojogame.util.ItemCreator.itemcreator
+import koutachan.kojogame.util.ReplaceTeamPrefix
 import net.md_5.bungee.api.ChatColor
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
@@ -175,18 +175,7 @@ object Event : Listener {
 
     @EventHandler
     fun onAsyncPlayerChatEvent(e: AsyncPlayerChatEvent) {
-        var teamname = ""
-        when (playerdata[e.player.uniqueId]?.team) {
-            "Red" -> {
-                teamname = "${config.get("RED_CHAT_PREFIX")}"
-            }
-            "Blue" -> {
-                teamname = "${config.get("BLUE_CHAT_PREFIX")}"
-            }
-            "Admin" -> {
-                teamname = "${config.get("ADMIN_CHAT_PREFIX")}"
-            }
-        }
+        val teamname = ReplaceTeamPrefix.replace(playerdata[e.player.uniqueId]?.team.toString())
         e.isCancelled = true
         if (!e.message.startsWith("!") && playerdata[e.player.uniqueId]?.team != "Default") {
             for (team in Bukkit.getOnlinePlayers()) {
@@ -194,12 +183,10 @@ object Event : Listener {
                     team.sendMessage("$teamname${e.player.name}: §r${e.message}")
                 }
             }
-        } else {
-            if (e.message.replaceFirst("!", "").isNotEmpty()) {
-                Bukkit.broadcastMessage("${lang.GLOBAL_CHAT_PREFIX} $teamname${e.player.name}: §r${
-                    e.message.replaceFirst("!",
-                        "")
-                }")
+        }else {
+            val message = e.message.replaceFirst("!", "")
+            if (message.isNotEmpty()) {
+                Bukkit.broadcastMessage("${lang.GLOBAL_CHAT_PREFIX} $teamname${e.player.name}: §r$message")
             } else {
                 e.player.sendMessage("${ChatColor.RED}何かを入力してください")
             }
@@ -271,7 +258,6 @@ object Event : Listener {
                         e.whoClicked.sendMessage("${ChatColor.RED}[ショップ] インベントリーを開けてから買ってね！")
                         return
                     }
-                    Bukkit.broadcastMessage((e.whoClicked.inventory.firstEmpty() == -1).toString())
                     for (inv in e.whoClicked.inventory.contents) {
                         if (inv != null && inv.type == Material.SPONGE) {
                             inv.amount = inv.amount - 1

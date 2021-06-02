@@ -3,6 +3,7 @@ package koutachan.kojogame.commands
 import koutachan.kojogame.langMessage.lang
 import koutachan.kojogame.langMessage.lang.config
 import koutachan.kojogame.playerdata
+import koutachan.kojogame.util.ReplaceTeamPrefix
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -19,18 +20,7 @@ object Global : CommandExecutor {
         args: Array<out String>?
     ): Boolean {
         if (sender is Player && args?.isNotEmpty()!!) {
-            var teamname = ""
-            when (playerdata[sender.uniqueId]?.team) {
-                "Red" -> {
-                    teamname = "${config.get("RED_CHAT_PREFIX")}"
-                }
-                "Blue" -> {
-                    teamname = "${config.get("BLUE_CHAT_PREFIX")}"
-                }
-                "Admin" -> {
-                    teamname = "${config.get("ADMIN_CHAT_PREFIX")}"
-                }
-            }
+            val teamname = ReplaceTeamPrefix.replace(playerdata[sender.uniqueId]?.team.toString())
             if(Command) {
                 val message: StringBuilder = java.lang.StringBuilder()
                 args.forEach{ i ->
