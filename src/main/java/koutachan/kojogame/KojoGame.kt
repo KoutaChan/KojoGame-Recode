@@ -2,13 +2,14 @@ package koutachan.kojogame
 
 
 import koutachan.kojogame.commands.*
+import koutachan.kojogame.commands.`fun`.Grapple
 import koutachan.kojogame.game.GameState.LOBBY
 import koutachan.kojogame.game.ResetSponge.resetsponge
 import koutachan.kojogame.runTask.ScoreBoard.scoreboardupdate
+import net.md_5.bungee.api.ChatColor
 import org.bukkit.Bukkit
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
-import org.fusesource.jansi.Ansi
 import java.io.File
 import java.util.*
 
@@ -51,6 +52,7 @@ class KojoGame : JavaPlugin() {
         getCommand("global").executor = Global
         getCommand("setspawn").tabCompleter = TabComplete
         getCommand("team").tabCompleter = TabComplete
+        getCommand("grapple").executor = Grapple
         // Add config.yml
         saveDefaultConfig()
         // ???
@@ -60,17 +62,18 @@ class KojoGame : JavaPlugin() {
         if(!SettingsFile.exists()) {
             saveResource("settings.yml", false)
         }
+        //AreaSystem.tick(60)
 
         if(YamlConfiguration.loadConfiguration(SettingsFile).getDouble("ConfigVersion") != SettingsVersion) {
-            logger.info("${Ansi.ansi().fg(Ansi.Color.RED)}settings.ymlのバージョンが一致していないため、再生成します。${Ansi.ansi().a(Ansi.Attribute.RESET)}")
+            Bukkit.getConsoleSender().sendMessage("${ChatColor.RED}settings.ymlのバージョンが一致していないため、再生成します。${ChatColor.RESET}")
             kotlin.runCatching {
                 saveResource("settings.yml", true)
             }.fold(
                 onSuccess = {
-                    logger.info("${Ansi.ansi().fg(Ansi.Color.GREEN)}settings.ymlの再生成に成功しました。${Ansi.ansi().a(Ansi.Attribute.RESET)}") },
+                    Bukkit.getConsoleSender().sendMessage("${ChatColor.GREEN}settings.ymlの再生成に成功しました。${ChatColor.RESET}") },
                 onFailure = {
                     it.printStackTrace()
-                    logger.info("${Ansi.ansi().fg(Ansi.Color.RED)}エラーが発生しました${Ansi.ansi().a(Ansi.Attribute.RESET)}")
+                    Bukkit.getConsoleSender().sendMessage("${ChatColor.RED}エラーが発生しました | 問題があると思う場合は、作成者に連絡してください${ChatColor.RESET}")
                 }
             )
             time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")

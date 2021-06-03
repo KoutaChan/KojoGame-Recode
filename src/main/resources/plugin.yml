@@ -21,3 +21,5 @@ commands:
   global:
     usage: Global Chat
     aliases: g
+  grapple:
+    permission: item.grapple

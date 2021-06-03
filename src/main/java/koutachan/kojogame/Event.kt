@@ -30,6 +30,7 @@ import org.bukkit.event.player.*
 import org.bukkit.inventory.meta.PotionMeta
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
+import org.bukkit.util.Vector
 
 object Event : Listener {
     @EventHandler
@@ -284,6 +285,29 @@ object Event : Listener {
             Bukkit.getScheduler().runTaskLater(plugin, {
                 e.player.inventory.remove(Material.GLASS_BOTTLE)
             }, 1)
+        }
+    }
+
+    @EventHandler
+    fun onPlayerFishEvent(e: PlayerFishEvent){
+        //Bukkit.broadcastMessage(e.hook.name)
+        //Bukkit.broadcastMessage(e.hook.customName)
+        //if(e.hook.name.equals("${ChatColor.GOLD}Grapple")) {
+            when (e.state) {
+                PlayerFishEvent.State.FAILED_ATTEMPT -> {
+                    e.player.sendMessage("${ChatColor.GOLD}Grappleに失敗した")
+                }
+                PlayerFishEvent.State.IN_GROUND -> {
+                    e.player.velocity = Vector(e.hook.location.x - e.player.location.x,e.hook.location.y - e.player.location.y,e.hook.location.z - e.player.location.z).normalize().multiply(2)
+                    e.player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent(e.player.velocity.toString()))
+                }
+                PlayerFishEvent.State.CAUGHT_ENTITY -> {
+                    e.player.sendMessage("${ChatColor.GOLD}Grappleに失敗した")
+                }
+                else -> {
+
+                //}
+            }
         }
     }
 }
