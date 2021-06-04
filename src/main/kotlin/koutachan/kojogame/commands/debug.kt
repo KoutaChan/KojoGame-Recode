@@ -1,10 +1,13 @@
 package koutachan.kojogame.commands
 
+import koutachan.kojogame.KojoGame.Companion.plugin
 import koutachan.kojogame.playerdata
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 
 object debug : CommandExecutor {
@@ -38,6 +41,13 @@ object debug : CommandExecutor {
                             if (args[0] == "4") {
                                 playerdata[player.uniqueId]?.team = "Admin"
                                 player.sendMessage(":ok_hand:")
+                            }else {
+                                if(args[0] == "5"){
+                                    val a = Location(Bukkit.getWorld(plugin.config.getString("iron.world")),plugin.config.getDouble("iron.x"),plugin.config.getDouble("iron.y"),plugin.config.getDouble("iron.z")).add(0.5,0.5,0.5)
+                                    val fallingBlock = Bukkit.getWorld(plugin.config.getString("iron.world")).spawnEntity(a, EntityType.FALLING_BLOCK)
+                                    fallingBlock.isGlowing = true
+                                    fallingBlock.setGravity(false)
+                                }
                             }
                         }
                     }

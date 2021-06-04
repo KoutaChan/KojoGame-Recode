@@ -8,7 +8,9 @@ import koutachan.kojogame.game.ResetSponge.resetsponge
 import koutachan.kojogame.runTask.ScoreBoard.scoreboardupdate
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.configuration.file.YamlConfiguration
+import org.bukkit.entity.EntityType
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 import java.util.*
@@ -79,6 +81,8 @@ class KojoGame : JavaPlugin() {
             time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
             // Plugin startup logic
         }
+
+        Bukkit.getWorld(plugin.config.getString("iron.world")).getBlockAt(plugin.config.getInt("iron.x"),plugin.config.getInt("iron.y"),plugin.config.getInt("iron.z"))
     }
 
     override fun onDisable() {

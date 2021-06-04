@@ -31,6 +31,7 @@ import org.bukkit.inventory.meta.PotionMeta
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.util.Vector
+import kotlin.math.abs
 
 object Event : Listener {
     @EventHandler
@@ -101,6 +102,9 @@ object Event : Listener {
 
     @EventHandler
     fun onBlockPlaceEvent(e: BlockPlaceEvent) {
+        if(playerdata[e.player.uniqueId]?.team == "Admin"){
+            return
+        }
         if (e.player.gameMode != GameMode.CREATIVE) {
             e.isCancelled = true
         }
@@ -298,7 +302,11 @@ object Event : Listener {
                     e.player.sendMessage("${ChatColor.GOLD}Grappleに失敗した")
                 }
                 PlayerFishEvent.State.IN_GROUND -> {
-                    e.player.velocity = Vector(e.hook.location.x - e.player.location.x,e.hook.location.y - e.player.location.y,e.hook.location.z - e.player.location.z).normalize().multiply(2)
+                    val x = e.hook.location.x - e.player.location.x
+                    val y = e.hook.location.y - e.player.location.y
+                    val z = e.hook.location.z - e.player.location.z
+                    e.player.velocity = Vector(x,y,z).normalize()//.multiply(abs((x) + (y / 10) + (z) / 8) + 1)
+                    Bukkit.broadcastMessage("Multiply!: " +abs((x) + (y / 10) + (z) / 8) + 1.toString())
                     e.player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent(e.player.velocity.toString()))
                 }
                 PlayerFishEvent.State.CAUGHT_ENTITY -> {
