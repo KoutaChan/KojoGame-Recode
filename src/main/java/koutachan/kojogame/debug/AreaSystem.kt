@@ -23,7 +23,11 @@ object AreaSystem {
     }
 
     fun check(location: Location,player: Player): Boolean{
-        if((location.blockX <= player.location.blockX || location.blockX <= (-player.location.blockX)) || (location.blockZ <= player.location.blockX || location.blockZ <= (-player.location.blockZ))){
+        //if((location.blockX <= player.location.blockX || location.blockX <= (-player.location.blockX)) || (location.blockZ <= player.location.blockX || location.blockZ <= (-player.location.blockZ))){
+        //    return true
+        //}
+
+        if((location.blockX < 0 && location.blockX >= -player.location.blockX) || (location.blockX >= 0 && location.blockX <= player.location.blockX) || (location.blockZ < 0 && location.blockZ >= -player.location.blockZ) || (location.blockZ >= 0 && location.blockZ <= player.location.blockZ)){
             return true
         }
         if(location.blockX < 0){

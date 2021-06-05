@@ -55,6 +55,7 @@ object Event : Listener {
                 }
             }
         }
+
     }
 
     //メモ(青) : 攻め

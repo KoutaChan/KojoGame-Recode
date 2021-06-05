@@ -3,14 +3,13 @@ package koutachan.kojogame
 
 import koutachan.kojogame.commands.*
 import koutachan.kojogame.commands.`fun`.Grapple
+import koutachan.kojogame.debug.AreaSystem
 import koutachan.kojogame.game.GameState.LOBBY
 import koutachan.kojogame.game.ResetSponge.resetsponge
 import koutachan.kojogame.runTask.ScoreBoard.scoreboardupdate
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.Bukkit
-import org.bukkit.Location
 import org.bukkit.configuration.file.YamlConfiguration
-import org.bukkit.entity.EntityType
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 import java.util.*
@@ -64,7 +63,7 @@ class KojoGame : JavaPlugin() {
         if(!SettingsFile.exists()) {
             saveResource("settings.yml", false)
         }
-        //AreaSystem.tick(60)
+        AreaSystem.tick(60)
 
         if(YamlConfiguration.loadConfiguration(SettingsFile).getDouble("ConfigVersion") != SettingsVersion) {
             Bukkit.getConsoleSender().sendMessage("${ChatColor.RED}settings.ymlのバージョンが一致していないため、再生成します。${ChatColor.RESET}")
@@ -81,7 +80,6 @@ class KojoGame : JavaPlugin() {
             time = YamlConfiguration.loadConfiguration(SettingsFile).getInt("GameTime")
             // Plugin startup logic
         }
-
         Bukkit.getWorld(plugin.config.getString("iron.world")).getBlockAt(plugin.config.getInt("iron.x"),plugin.config.getInt("iron.y"),plugin.config.getInt("iron.z"))
     }
 

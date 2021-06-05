@@ -5,6 +5,7 @@ import koutachan.kojogame.langMessage.lang.config
 import koutachan.kojogame.playerdata
 import koutachan.kojogame.util.ReplaceTeamPrefix
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -26,9 +27,9 @@ object Global : CommandExecutor {
                 args.forEach{ i ->
                     message.append("$i ")
                 }
-                Bukkit.broadcastMessage("${lang.GLOBAL_CHAT_PREFIX} $teamname${sender.name}: §r$message")
+                Bukkit.broadcastMessage("${lang.GLOBAL_CHAT_PREFIX} $teamname${sender.name}: ${ChatColor.RESET}$message")
             }else {
-                Bukkit.broadcastMessage("${lang.GLOBAL_CHAT_PREFIX} $teamname${sender.name}: §r${args[0]}")
+                Bukkit.broadcastMessage("${lang.GLOBAL_CHAT_PREFIX} $teamname${sender.name}: ${ChatColor.RESET}${args[0]}")
             }
         }
     return true
