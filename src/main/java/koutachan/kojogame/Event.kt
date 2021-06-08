@@ -30,6 +30,7 @@ import org.bukkit.event.player.*
 import org.bukkit.inventory.meta.PotionMeta
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
+import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.util.Vector
 import kotlin.math.abs
 
@@ -38,6 +39,45 @@ object Event : Listener {
     fun onPlayerJoinEvent(e: PlayerJoinEvent) {
         e.joinMessage = ""
         scoreboard(e.player)
+        if (!playerdata.containsKey(e.player.uniqueId)) {
+            playerdata[e.player.uniqueId] = PlayerData()
+        }
+        if (GameState == PLAYING) {
+            if (playerdata[e.player.uniqueId]?.team == "Default") {
+                object : BukkitRunnable() {
+                    var time = 30 + 1
+                    override fun run() {
+                        time--
+                        e.player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent("${ChatColor.YELLOW}$time 秒以内にKITを選択してください"))
+                        if (playerdata[e.player.uniqueId]?.roleName != "Default") {
+                            e.player.sendMessage("${ChatColor.RED}キットを選択されたため、チームを自動的に割り振っています...!")
+                            if (e.player.scoreboard.getTeam("Red").size == e.player.scoreboard.getTeam("Blue").size) {
+                                when ((1..10).random()) {
+                                    in 1..5 -> {
+                                        e.player.scoreboard.getTeam("Red")
+                                            .addEntry(e.player.name) //hashmapだと入るまでに時間がかかるから即座に入れる
+                                        playerdata[e.player.uniqueId]?.team = "Red"
+                                    }
+                                    in 6..10 -> {
+                                        e.player.scoreboard.getTeam("Blue").addEntry(e.player.name)
+                                        playerdata[e.player.uniqueId]?.team = "Blue"
+                                    }
+                                }
+                            } else {
+                                if (e.player.scoreboard.getTeam("Blue").size < e.player.scoreboard.getTeam("Red").size) {
+                                    e.player.scoreboard.getTeam("Blue").addEntry(e.player.name)
+                                    playerdata[e.player.uniqueId]?.team = "Blue"
+                                } else {
+                                    e.player.scoreboard.getTeam("Red").addEntry(e.player.name)
+                                    playerdata[e.player.uniqueId]?.team = "Red"
+                                }
+                            }
+                            cancel()
+                        }
+                    }
+                }.runTaskTimer(plugin, 0, 20)
+            }
+        }
     }
 
     @EventHandler

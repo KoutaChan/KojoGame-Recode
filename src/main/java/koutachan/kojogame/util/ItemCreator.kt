@@ -5,7 +5,7 @@ import org.bukkit.inventory.ItemStack
 
 object ItemCreator {
     fun itemcreator(material: Material,amount: Int,damage: Short,displayName: String,vararg lore: String): ItemStack {
-        val item = ItemStack(material,amount,damage)
+        val item = ItemStack(material, amount, damage)
         val meta = item.itemMeta
 
         meta.displayName = displayName

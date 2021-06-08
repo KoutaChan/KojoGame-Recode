@@ -1,1 +1,0 @@
-package koutachan.kojogame.game
