@@ -1,0 +1,3 @@
+name: KojoGame
+version: ${project.version}
+main: koutachan.kojogame.KojoGame
