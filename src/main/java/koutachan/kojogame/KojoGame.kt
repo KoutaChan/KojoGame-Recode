@@ -2,6 +2,8 @@ package koutachan.kojogame
 
 
 import koutachan.kojogame.game.GameState.LOBBY
+import koutachan.kojogame.game.RoleType
+import koutachan.kojogame.game.role.Knight
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
 
@@ -21,7 +23,6 @@ class KojoGame : JavaPlugin() {
         // Register Event
         //server.pluginManager.registerEvents(Event,this)
         // Register Command
-
         // Add config.yml
         saveDefaultConfig()
         // ???
