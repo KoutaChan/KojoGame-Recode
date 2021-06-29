@@ -4,6 +4,7 @@ package koutachan.kojogame
 import koutachan.kojogame.game.GameState.LOBBY
 import koutachan.kojogame.game.RoleType
 import koutachan.kojogame.game.role.Knight
+import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
 
@@ -27,6 +28,10 @@ class KojoGame : JavaPlugin() {
         saveDefaultConfig()
         // ???
         // Custom Config
+        Bukkit.getOnlinePlayers().forEach() { b ->
+            b.address
+
+        }
     }
 
     override fun onDisable() {
